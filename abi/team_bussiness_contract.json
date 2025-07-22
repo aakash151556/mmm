@@ -1,0 +1,108 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			}
+		],
+		"name": "SetHistoryContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_logicContract",
+				"type": "address"
+			}
+		],
+		"name": "SetLogicContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			}
+		],
+		"name": "SetStorageContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_newUserId",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pkgt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.purchaseType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkgAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "TeamBussinessCalc",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_newUserId",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			}
+		],
+		"name": "TeamCalc",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

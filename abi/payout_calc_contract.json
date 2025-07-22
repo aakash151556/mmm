@@ -1,0 +1,139 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "teamContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkgAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "LevelIncomeCalc",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkgAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "ReferralIncomeCalc",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			}
+		],
+		"name": "SetHistoryContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_logicContract",
+				"type": "address"
+			}
+		],
+		"name": "SetLogicContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			}
+		],
+		"name": "SetStorageContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "teamContract",
+				"type": "address"
+			}
+		],
+		"name": "SetTeamContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkgid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "round",
+				"type": "uint256"
+			}
+		],
+		"name": "StakePayoutCalc",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

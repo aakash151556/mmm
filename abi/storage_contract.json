@@ -1,0 +1,1879 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "usdtAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "accessControl",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "fundReciever",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTAccessControlAddress",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.IncomeType",
+				"name": "it",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "total",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTAllIncome",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum CustomDataTypesContract.BussinessType",
+				"name": "bt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "total",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTBussinessTotal",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "pkgid",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTLastTopup",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTLevelWiseTeamCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_t",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTManagerDirectCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_t",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTRankWiseDirectCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTRankWiseLevelTeamCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTRankWiseTeamCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_t",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTSponsorsCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTTeamCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTTokenAddress",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "pkid",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "round",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pkgid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "usdt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "token",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "upgrade",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "round",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"indexed": false,
+				"internalType": "struct CustomDataTypesContract.TopupDetail",
+				"name": "td",
+				"type": "tuple"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTTopupDetail",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "sno",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTTotalUsers",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTUSDTAddress",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "_sno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_sponsorAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_sp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_actts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_entts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "_status",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "_iswithdrawl",
+						"type": "bool"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.RegisterBy",
+						"name": "_entryby",
+						"type": "uint8"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.RankType",
+						"name": "_rt",
+						"type": "uint8"
+					}
+				],
+				"indexed": false,
+				"internalType": "struct CustomDataTypesContract.User",
+				"name": "user",
+				"type": "tuple"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTUser",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "_status",
+				"type": "bool"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTWithdrawlOnOff",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTYearCount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTdepositToAccount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTdepositToContract",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTtransferFromAccount",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "EVTtransferFromContract",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.IncomeType",
+				"name": "it",
+				"type": "uint8"
+			}
+		],
+		"name": "GetAllIncome",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.BussinessType",
+				"name": "bt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetBussinessTotal",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetEthBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetLastTopup",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			}
+		],
+		"name": "GetLevelWiseTeamCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetManagerDirectCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetRankSponsorsCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetRankWiseLevelTeamCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetRankWiseTeamCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetSponsorsCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetTeamCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetTokenBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetTokenInstance",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetTokenPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "round",
+				"type": "uint256"
+			}
+		],
+		"name": "GetTopupDetail",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pkgid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "usdt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "token",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "upgrade",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "round",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.TopupDetail",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetTotalUsers",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetUSDTInstance",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetUSDTPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetUser",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "_sno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_sponsorAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_sp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_actts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_entts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "_status",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "_iswithdrawl",
+						"type": "bool"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.RegisterBy",
+						"name": "_entryby",
+						"type": "uint8"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.RankType",
+						"name": "_rt",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.User",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetWithdrawlOnOff",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetYearCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "accessControl",
+				"type": "address"
+			}
+		],
+		"name": "SetAccessControlAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.IncomeType",
+				"name": "it",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "total",
+				"type": "uint256"
+			}
+		],
+		"name": "SetAllIncome",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.BussinessType",
+				"name": "bt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "total",
+				"type": "uint256"
+			}
+		],
+		"name": "SetBussinessTotal",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkgid",
+				"type": "uint256"
+			}
+		],
+		"name": "SetLastTopup",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			}
+		],
+		"name": "SetLevelWiseTeamCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_t",
+				"type": "uint256"
+			}
+		],
+		"name": "SetManagerDirectCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_t",
+				"type": "uint256"
+			}
+		],
+		"name": "SetRankSponsorsCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			}
+		],
+		"name": "SetRankWiseLevelTeamCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			}
+		],
+		"name": "SetRankWiseTeamCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_t",
+				"type": "uint256"
+			}
+		],
+		"name": "SetSponsorsCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			}
+		],
+		"name": "SetTeamCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			}
+		],
+		"name": "SetTokenAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "round",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pkgid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "usdt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "token",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "upgrade",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "round",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.TopupDetail",
+				"name": "td",
+				"type": "tuple"
+			}
+		],
+		"name": "SetTopupDetail",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "sno",
+				"type": "uint256"
+			}
+		],
+		"name": "SetTotalUsers",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "usdtAddress",
+				"type": "address"
+			}
+		],
+		"name": "SetUSDTAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "_sno",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_sponsorAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_sp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_actts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_entts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "_status",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "_iswithdrawl",
+						"type": "bool"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.RegisterBy",
+						"name": "_entryby",
+						"type": "uint8"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.RankType",
+						"name": "_rt",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.User",
+				"name": "user",
+				"type": "tuple"
+			}
+		],
+		"name": "SetUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_status",
+				"type": "bool"
+			}
+		],
+		"name": "SetWithdrawlOnOff",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "data",
+				"type": "uint256"
+			}
+		],
+		"name": "SetYearCount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "depositToAccount",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "depositToContract",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "transferFromAccount",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "transferFromContract",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

@@ -1,0 +1,522 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "accessControl",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetClaimDetail",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.ClaimDetail[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.purchaseType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetLBV",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "bv",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lvl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.BV[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			}
+		],
+		"name": "GetLevelBonus",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lvl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.LevelBonus[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetReferralBonus",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lvl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.ReferralBonus[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetStakeBonus",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.StakeBonus[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetTransactionDetail",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.IncomeType",
+						"name": "it",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.TransactionDetail[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "accessControl",
+				"type": "address"
+			}
+		],
+		"name": "SetAccessControlAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PaymentType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.ClaimDetail",
+				"name": "data",
+				"type": "tuple"
+			}
+		],
+		"name": "SetClaimDetail",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.purchaseType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "bv",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lvl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.BV",
+				"name": "data",
+				"type": "tuple"
+			}
+		],
+		"name": "SetLBV",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lvl",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lvl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.LevelBonus",
+				"name": "data",
+				"type": "tuple"
+			}
+		],
+		"name": "SetLevelBonus",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lvl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.ReferralBonus",
+				"name": "data",
+				"type": "tuple"
+			}
+		],
+		"name": "SetReferralBonus",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "income",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.StakeBonus",
+				"name": "data",
+				"type": "tuple"
+			}
+		],
+		"name": "SetStakeBonus",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dr",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum CustomDataTypesContract.IncomeType",
+						"name": "it",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CustomDataTypesContract.TransactionDetail",
+				"name": "data",
+				"type": "tuple"
+			}
+		],
+		"name": "SetTransactionDetail",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]

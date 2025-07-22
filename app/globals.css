@@ -1,26 +1,400 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    padding-top: 56px;
+    background-image: url(https://www.alqurantranslation.com/wp-content/uploads/2018/02/crypto-news-footer-bg.jpg);
+}
+
+@media (max-width: 991.98px) {
+
+  .offcanvas-collapse.open {
+    visibility: visible;
+    transform: translateX(-100%);
+  }
+}
+
+.nav-scroller .nav {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.nav-scroller .nav-link {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.nav-scroller .nav-link:hover {
+  color: #007bff;
+}
+
+.nav-scroller .active {
+  font-weight: 500;
+  color: #343a40;
+}
+
+.bg-purple {
+  background-color: #6f42c1;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: #0000001a;
+  border: solid rgba(0, 0, 0, 0.15);
+  border-width: 1px 0;
+  box-shadow: inset 0 0.5em 1.5em #0000001a, inset 0 0.125em 0.5em #00000026;
+}
+.b-example-vr {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 100vh;
+}
+.bi {
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.btn-bd-primary {
+  --bd-violet-bg: #712cf9;
+  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: var(--bd-violet-bg);
+  --bs-btn-border-color: var(--bd-violet-bg);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #6528e0;
+  --bs-btn-hover-border-color: #6528e0;
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #5a23c8;
+  --bs-btn-active-border-color: #5a23c8;
+}
+.bd-mode-toggle {
+  z-index: 1500;
+}
+.bd-mode-toggle .bi {
+  width: 1em;
+  height: 1em;
+}
+.bd-mode-toggle .dropdown-menu .active .bi {
+  display: block !important;
+}
+
+
+.nav-link {
+    color: rgb(255 255 255) !important;
+
+}
+
+.nav-scroller .nav {
+   color: rgb(255 255 255) !important;
+   
+    justify-content: space-between;
+}
+
+.bga {
+    background: #a86400 !important;
+    margin-top: 20px;
+}
+
+.bg-dark {
+
+    padding: 3px 0px !important;
+     background-color: rgb(2 22 41) !important;
+}
+
+
+.nav-scroller .active {
+    font-weight: 400 !important;
+    color: #343a40;
+}
+
+
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 0px 20px;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+
+        margin-left: 50px !important;
+    }
+
+
+.useraccount {
+  background: linear-gradient(90deg, rgb(168 100 0) 0%, rgb(2 55 106) 50%);
+    padding: 8px;
+    margin: 0;
+}
+
+.cardtext {
+    font-size: 16px;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+}
+p.card-text {
+    border-bottom: 0px solid #a864001f;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+    background: #f2f2f2;
+    border-radius: 4px;
+    font-size: 14px;
+}
+button.input-group-text {
+    border-radius: 0;
+    background: #ce8700;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 5px 13px;
+    margin: 5px;
+}
+
+
+input.form-control {
+    border: 0;
+}
+
+.bhas h4 {
+       padding: 8px 8px 8px;
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 0px solid #021629;
+    background: linear-gradient(90deg, rgb(168 100 0) 0%, rgb(2 55 106) 50%);
+    border-radius: 4px 4px 0px 0px;
+}
+
+ .h2, h2 {
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: 700;
+}
+
+    p {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
+
+.box-3, .box-6, .box-9 {
+    background-image: linear-gradient(263deg, #35cf5b -3.84%,  #0c93af 73.84%) !important;
+        color: #fff;
+            border: none;
+                border-bottom: 2px solid #cd8600;
+}
+
+
+.box-2, .box-4, .box-7 {
+    background-image: linear-gradient(263deg,  #01bbf8 -3.84%, #0246c7 73.84%);
+       color: #fff;
+            border: none;
+                border-bottom: 2px solid #cd8600;
+}
+
+
+.box-1, .box-5, .box-8 {
+     background-image: linear-gradient(270deg, #f7db02 -3.84%, #d78000 73.84%) !important;
+       color: #fff;
+            border: none;
+                border-bottom: 2px solid #cd8600;
+}
+
+.border11 {
+    border: 1px solid #f1f1f1;
+    padding: 15px 20px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+
+hr {
+    margin: 1rem 0;
+    color: inherit;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: .25;
+    color: #28282842;
+}
+
+
+
+.padings {
+    padding: 0px 15px;
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+
+button.btn.btn-sm.btn-primary {
+    background: #a36303;
+    padding: 6px 20px;
+    border-radius: 0;
+    text-transform: uppercase;
+    border: navajowhite;
+    font-weight: 600;
+}
+
+.zoom-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.zoom-effect:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.card-body p{
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.more_flex{
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.icons svg {
+   background: #0e2c48;
+    padding: 14px;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    color: #ffffffed;
+}
+
+.sections {
+    background: #021629;
+    padding: 8px;
+    position: fixed;
+    bottom: 0;
+    z-index: 99999;
+    width: 100%;
+}
+
+.white{
+  color: #ffffff !important; 
+}
+
+
+
+.card-header {
+    padding: 8px 8px 8px;
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 0px solid #021629;
+    background: linear-gradient(90deg, rgb(168 100 0) 0%, rgb(2 55 106) 50%);
+    border-radius: 4px 4px 0px 0px;
+}
+
+
+h2.card-title {
+    font-size: 16px;
+    margin: 0;
+    padding: 0px 6px;
+}
+
+button.btn.btn-primary {
+    background: #a36303;
+    padding: 6px 20px;
+    text-transform: uppercase;
+    border: navajowhite;
+    font-weight: 600;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+label {
+    display: inline-block;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+@media only screen and (max-width: 600px) {
+.border11 {
+    border: 0px solid #f1f1f1;
+    padding: 0px;
+    border-radius: 0px;
+    background: #ffffff0d;
+}
+.padings {
+    padding: 0;
+}
+.rounded {
+    border-radius: var(--bs-border-radius) !important;
+    padding: 0 !important;
+}
+.table-bordered>:not(caption)>*>* {
+    white-space: nowrap !important;
+}
+.navbar-expand-lg .navbar-nav {
+    margin-left: 0px !important;
+    padding: 20px 0px;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding: 0px 0px !important;
+}
+li.nav-item {
+    padding: 10px 0px 10px;
+    border-bottom: 1px dashed #ffffff26;
+}
+}
+
+@media (max-width: 991.98px) {
+    .offcanvas-collapse {
+        position: fixed;
+        top: 75px;
+        bottom: 0;
+        left: 100%;
+        width: 100%;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        overflow-y: auto;
+        visibility: hidden;
+        background-color: #021629;
+        transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
 }
