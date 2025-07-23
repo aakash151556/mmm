@@ -32,7 +32,7 @@ export const connect_wallet =async (selectedAccount) => {
         method:'eth_chainId'
     })
     chainId=parseInt(chainIdHex,16)
-    if(chainId!==11155111)
+    if(chainId!==56)
     {
       localStorage.setItem("connection","0")      
       return;

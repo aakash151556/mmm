@@ -95,7 +95,7 @@ try{
     
 
 
-    const approve_tx=await stakeTokenContract.approve(process.env.NEXT_PUBLIC_STORAGE_CONTRACT,ethers.parseUnits(amount, 18));
+    const approve_tx=await stakeTokenContract.approve(process.env.NEXT_PUBLIC_STORAGE_CONTRACT,ethers.parseUnits(netBVT+"", 18));
     const approve_reciept=await approve_tx.wait();
     if(approve_reciept){
         const tx=  await logicContract.JoinNow(account,pkgDropdown.value)
