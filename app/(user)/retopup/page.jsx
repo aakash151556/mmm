@@ -49,6 +49,7 @@ const ReTopup = () => {
             console.log("price update successs");
           }
         } else {
+             setCurrentPrice(currentPriceInETH);
           console.log("live rate already updated");
         }
       } catch (err) {

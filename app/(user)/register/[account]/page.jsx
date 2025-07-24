@@ -52,6 +52,7 @@ const Register = ({ params }) => {
           }
         }
         else{
+              setCurrentPrice(currentPriceInETH);
             console.log("live rate already updated")
         }
       } catch (err) {
