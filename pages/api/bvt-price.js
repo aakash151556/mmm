@@ -5,6 +5,10 @@ export default async function handler(req, res) {
     const { data } = await axios.get(
       'https://api.mexc.com/api/v3/ticker/price?symbol=BVTUSDT' 
     );
+    const { price } = await data.json();
+       const currentPrice=await storageContract.GetCurrentPrice()
+        console.log(ethers.formatEther(currentPrice))
+    console.log(price)
     res.status(200).json(data);
   } catch (error) {
     console.error('MEXC Fetch Error:', error.message);

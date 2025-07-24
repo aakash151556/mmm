@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 const ReTopup = () => {
  
- const {selectedAccount,logicContract,storageContract,teamBussinessContract,stakeTokenContract,stakeUSDTContract}=useContext(Web3Context)
+  const {selectedAccount,logicContract,storageContract,teamBussinessContract,stakeTokenContract,stakeUSDTContract}=useContext(Web3Context)
   const [currentPrice,setCurrentPrice]=useState(0);
   const [netBVT,setNetBVT]=useState(0);
 
@@ -18,14 +18,20 @@ const ReTopup = () => {
   
    useEffect(() => {
       const fetchPrice = async () => {
-      //   const resp = await fetch('/api/bvt-price'); // No CORS issue
-      //   const { price } = await resp.json();
-      //   console.log(price)
-        setCurrentPrice(0.52);
+          try{
+        const resp = await fetch('/api/bvt-price'); // No CORS issue
+        const { price } = await resp.json();
+     
+     
+       setCurrentPrice(price); 
+          }
+          catch(err){
+              console.error(err)
+             setCurrentPrice(0.52);
+          }
       };
       fetchPrice();
     }, []);
-
 
 
     

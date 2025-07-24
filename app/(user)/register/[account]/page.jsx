@@ -20,10 +20,12 @@ const Register = ({params}) => {
         try{
       const resp = await fetch('/api/bvt-price'); // No CORS issue
       const { price } = await resp.json();
-      console.log(price)      
+      
+     setCurrentPrice(price); 
         }
         catch(err){
             console.error(err)
+           setCurrentPrice(0.52);
         }
     };
     fetchPrice();
@@ -31,10 +33,6 @@ const Register = ({params}) => {
 
 
   
- useEffect(() => {
-    setCurrentPrice(0.52);
-  }, []);
-
 const fn_CalculateBVT=async(e)=>{
     const pkgid=e.target.value;
     if(pkgid==""){
