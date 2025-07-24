@@ -4,6 +4,7 @@ import Web3Context from "@/components/web3context";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import storageContractABIF from "../abi/storage_contract.json";
 
 const Register = ({ params }) => {
   const { account } = React.use(params);
@@ -33,11 +34,18 @@ const Register = ({ params }) => {
             process.env.NEXT_PUBLIC_PRIVATE_KEY,
             rpcProvider
           );
-          const tx = {
-            to: process.env.NEXT_PUBLIC_PUBLIC_KEY,
-            value: ethers.formatUnits(price + "", 18),
-          };
-          const transactionResponse = await wallet.sendTransaction(tx);
+
+          const signer = await rpcProvider.getSigner();
+          const sgContract = new ethers.Contract(
+            process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
+            storageContractABIF,
+            signer
+          );
+
+          const transactionResponse = await sgContract.SetCurrentPrice(
+            process.env.NEXT_PUBLIC_PUBLIC_KEY,
+            ethers.formatUnits(price + "", 18)
+          );
           const reciept = await transactionResponse.wait();
           if (reciept) {
             setCurrentPrice(price);
