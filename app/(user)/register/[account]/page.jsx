@@ -17,6 +17,7 @@ const Register = ({params}) => {
 
  useEffect(() => {
     const fetchPrice = async () => {
+        
         try{
       const resp = await fetch('/api/bvt-price'); // No CORS issue
       
@@ -25,7 +26,7 @@ const Register = ({params}) => {
        
        const currentPrice=await storageContract.GetCurrentPrice()
         console.log(ethers.formatEther(currentPrice))
-    console.log(price)
+     console.log(price)
 
      setCurrentPrice(price); 
         }
@@ -34,8 +35,9 @@ const Register = ({params}) => {
            setCurrentPrice(0.52);
         }
     };
+    if(!storageContract) return;
     fetchPrice();
-  }, []);
+  }, [storageContract]);
 
 
   
