@@ -3,7 +3,7 @@ import Web3Context from "@/components/web3context";
 import { ethers } from "ethers";
 import React, { useContext, useEffect,useState } from 'react'
 import Swal from "sweetalert2";
-
+import storageContractABIF from "../../../../abi/storage_contract.json";
 
 
 const ReTopup = () => {
@@ -16,25 +16,48 @@ const ReTopup = () => {
 
   
   
-   useEffect(() => {
+    useEffect(() => {
       const fetchPrice = async () => {
-          try{
-        const resp = await fetch('/api/bvt-price'); // No CORS issue
-        const { price } = await resp.json();
-     
-     const currentPrice=await storageContract.GetCurrentPrice()
-             console.log(ethers.formatEther(currentPrice))
-         console.log(price)
-       setCurrentPrice(price); 
+        try {
+          const resp = await fetch("/api/bvt-price");
+          const { price } = await resp.json();
+          const currentPrice = await storageContract.GetCurrentPrice();
+          const currentPriceInETH = ethers.formatEther(currentPrice);
+          if (Number(price) !== Number(currentPriceInETH)) {
+            const rpcProvider = new ethers.JsonRpcProvider(
+              process.env.NEXT_PUBLIC_BSC_RPC_URL
+            );
+            const wallet = new ethers.Wallet(
+              process.env.NEXT_PUBLIC_PRIVATE_KEY,
+              rpcProvider
+            );
+  
+            const sgContract = new ethers.Contract(
+              process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
+              storageContractABIF,
+              wallet
+            );
+  
+            const transactionResponse = await sgContract.SetCurrentPrice(
+              process.env.NEXT_PUBLIC_PUBLIC_KEY,
+              ethers.parseEther(price + "", 18)
+            );
+            const reciept = await transactionResponse.wait();
+            if (reciept) {
+              setCurrentPrice(price);
+              console.log("price update successs");
+            }
           }
-          catch(err){
-              console.error(err)
-             setCurrentPrice(0.52);
-          }
+        } catch (err) {
+          console.error(err);
+          const currentPrice = await storageContract.GetCurrentPrice();
+          const currentPriceInETH = ethers.formatEther(currentPrice);
+          setCurrentPrice(currentPriceInETH);
+        }
       };
+      if (!storageContract) return;
       fetchPrice();
-    }, []);
-
+    }, [storageContract]);
 
     
 const fn_CalculateBVT=async(e)=>{

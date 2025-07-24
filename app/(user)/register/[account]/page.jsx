@@ -35,16 +35,15 @@ const Register = ({ params }) => {
             rpcProvider
           );
 
-          const signer = await rpcProvider.getSigner();
           const sgContract = new ethers.Contract(
             process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
             storageContractABIF,
-            signer
+            wallet
           );
 
           const transactionResponse = await sgContract.SetCurrentPrice(
             process.env.NEXT_PUBLIC_PUBLIC_KEY,
-            ethers.formatUnits(price + "", 18)
+            ethers.parseEther(price + "", 18)
           );
           const reciept = await transactionResponse.wait();
           if (reciept) {
