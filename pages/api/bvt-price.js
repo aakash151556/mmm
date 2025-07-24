@@ -1,7 +1,10 @@
+import Web3Context from '@/components/web3context';
 import axios from 'axios';
 
 export default async function handler(req, res) {
+
   try {
+    const {storageContract}=useContext(Web3Context)
     const { data } = await axios.get(
       'https://api.mexc.com/api/v3/ticker/price?symbol=BVTUSDT' 
     );
