@@ -17,12 +17,22 @@ const Register = ({params}) => {
 
  useEffect(() => {
     const fetchPrice = async () => {
-    //   const resp = await fetch('/api/bvt-price'); // No CORS issue
-    //   const { price } = await resp.json();
-    //   console.log(price)
-      setCurrentPrice(0.52);
+        try{
+      const resp = await fetch('/api/bvt-price'); // No CORS issue
+      const { price } = await resp.json();
+      console.log(price)      
+        }
+        catch(err){
+            console.error(err)
+        }
     };
     fetchPrice();
+  }, []);
+
+
+  
+ useEffect(() => {
+    setCurrentPrice(0.52);
   }, []);
 
 const fn_CalculateBVT=async(e)=>{
