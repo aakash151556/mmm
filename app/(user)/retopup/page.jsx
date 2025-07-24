@@ -3,7 +3,7 @@ import Web3Context from "@/components/web3context";
 import { ethers } from "ethers";
 import React, { useContext, useEffect,useState } from 'react'
 import Swal from "sweetalert2";
-import storageContractABIF from "../../../../abi/storage_contract.json";
+import storageContractABIF from "../../../abi/storage_contract.json";
 
 
 const ReTopup = () => {
