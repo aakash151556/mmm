@@ -1,7 +1,7 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globals.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import Link from "next/link";
 
 import { connect_wallet } from "@/components/connect_wallet";
@@ -42,73 +42,57 @@ export default function RootLayout({ children }) {
       setStorageData(data);
     }
   }, []);
-    const handleWallet=async(selected)=>{
-
-      try{
-        setIsLoading(true)
-        const {signer,provider,selectedAccount,storageContract,logicContract,payoutContract,teamBussinessContract,historyContract,accessContract,stakeTokenContract,stakeUSDTContract,erc20ABI,chainId}=await connect_wallet(selected);       
-        
-        setState({signer,provider,selectedAccount,storageContract,logicContract,payoutContract,teamBussinessContract,historyContract,accessContract,stakeTokenContract,stakeUSDTContract,erc20ABI,chainId})             
-        
-      }
-      catch(error){ 
-        console.log(error)
-       // navigate("/")
-      }finally{
-        setIsLoading(false)
-      }
-    }
-    useEffect(()=>{
-      try{
-      window.ethereum.on("accountsChanged",()=>{handle_account_change(setState); 
-        localStorage.removeItem("selectedAccount")
-        localStorage.setItem("connection","0")
-        handleWallet() ;
-        })
-      window.ethereum.on("chainChanged",()=>{handle_chain_change(setState); 
-        localStorage.removeItem("selectedAccount")
-        localStorage.setItem("connection","0")
-        handleWallet() ;
-       })
-      return ()=>{
-        window.ethereum.removeListener("accountsChanged",()=>handle_account_change(setState))
-        window.ethereum.removeListener("chainChanged",()=>handle_chain_change(setState))
-      }
-    }
-    catch(err){
-      console.log(err)
-
-    }
-    },[])
+    const handleWallet =useCallback(async () => {
+       try {
+         setIsLoading(true);
+         const {
+           signer,
+           provider,
+           selectedAccount,
+           storageContract,
+           logicContract,
+           payoutContract,
+           teamBussinessContract,
+           historyContract,
+           accessContract,
+           stakeTokenContract,
+           stakeUSDTContract,
+           erc20ABI,
+           chainId,
+         } = await connect_wallet();
+   if (selectedAccount === state.selectedAccount && chainId === state.chainId) return;
+         setState({
+           signer,
+           provider,
+           selectedAccount,
+           storageContract,
+           logicContract,
+           payoutContract,
+           teamBussinessContract,
+           historyContract,
+           accessContract,
+           stakeTokenContract,
+           stakeUSDTContract,
+           erc20ABI,
+           chainId,
+         });
+       } catch (error) {
+         console.log(error);
+         // navigate("/")
+       } finally {
+         setIsLoading(false);
+       }
+     }, [state.selectedAccount, state.chainId]);
+   
    const handleConnectWallet=async()=>{  
       handleWallet()            
    }
 
    useEffect(()=>{
-    if(localStorage.getItem("connection")=="1")
+
       handleWallet(localStorage.getItem("selectedAccount"))
    },[])
    
-
-   const handleLogout=async()=>{
-      localStorage.removeItem("selectedAccount")
-      localStorage.setItem("connection","0")
-      rounter.push("/")
-      window.location.reload()
-   }
-
-   const previewAccount=async()=>{
-        const previewAccount=document.querySelector("#previewAccount").value;
-        handleWallet(previewAccount)
-       const btnClose=document.querySelector("#btnClose")       
-        rounter.push("/Dashboard")
-        btnClose.click()
- 
-   }
-
-const gotodashboard=async()=>{
-  rounter.push("/Dashboard")
-}
 
 
 
