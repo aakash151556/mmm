@@ -51,6 +51,9 @@ const Register = ({ params }) => {
             console.log("price update successs");
           }
         }
+        else{
+            console.log("live rate already updated")
+        }
       } catch (err) {
         console.error(err);
         const currentPrice = await storageContract.GetCurrentPrice();
