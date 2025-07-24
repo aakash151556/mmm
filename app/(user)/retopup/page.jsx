@@ -22,7 +22,9 @@ const ReTopup = () => {
         const resp = await fetch('/api/bvt-price'); // No CORS issue
         const { price } = await resp.json();
      
-     
+     const currentPrice=await storageContract.GetCurrentPrice()
+             console.log(ethers.formatEther(currentPrice))
+         console.log(price)
        setCurrentPrice(price); 
           }
           catch(err){
