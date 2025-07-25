@@ -3,7 +3,8 @@ import Web3Context from "@/components/web3context";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import storageContractABIF from "../../../abi/storage_contract.json";
+import storageContractABIF from "@/abi/storage_contract.json";
+import Loader from "@/components/Loader";
 
 const ReTopup = () => {
   const {
@@ -16,14 +17,18 @@ const ReTopup = () => {
   } = useContext(Web3Context);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [netBVT, setNetBVT] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [pkgvalue, setPkgValue] = useState(null);
 
   useEffect(() => {
     const fetchPrice = async () => {
       try {
+        setLoading(true);
         const resp = await fetch("/api/bvt-price");
-        const { price } = await resp.json();
+        let { price } = await resp.json();
         const currentPrice = await storageContract.GetCurrentPrice();
         const currentPriceInETH = ethers.formatEther(currentPrice);
+        if (!price) price = currentPriceInETH;
         if (Number(price) !== Number(currentPriceInETH)) {
           const rpcProvider = new ethers.JsonRpcProvider(
             process.env.NEXT_PUBLIC_BSC_RPC_URL
@@ -45,14 +50,21 @@ const ReTopup = () => {
           );
           const reciept = await transactionResponse.wait();
           if (reciept) {
+            setLoading(false);
             setCurrentPrice(price);
             console.log("price update successs");
+          } else {
+            setLoading(false);
+            setCurrentPrice(price);
+            console.log(reciept);
           }
         } else {
-             setCurrentPrice(currentPriceInETH);
+          setLoading(false);
+          setCurrentPrice(currentPriceInETH);
           console.log("live rate already updated");
         }
       } catch (err) {
+        setLoading(false);
         console.error(err);
         const currentPrice = await storageContract.GetCurrentPrice();
         const currentPriceInETH = ethers.formatEther(currentPrice);
@@ -69,6 +81,7 @@ const ReTopup = () => {
       alert("select package");
       return;
     }
+    setPkgValue(pkgid)
     let amount = 0;
     if (pkgid == 0) {
       amount = 54;
@@ -94,33 +107,34 @@ const ReTopup = () => {
 
   const fn_submit = async (e) => {
     e.preventDefault();
-    const pkgDropdown = document.querySelector("#ddPackage");
-    if (pkgDropdown.value == "") {
+    
+
+    if (pkgvalue == null || pkgvalue=="") {
       alert("select package");
       return;
     }
     try {
       let amount = "0";
-      if (pkgDropdown.value == 0) {
+      if (pkgvalue == 0) {
         amount = "54";
-      } else if (pkgDropdown.value == 1) {
+      } else if (pkgvalue == 1) {
         amount = "215";
-      } else if (pkgDropdown.value == 2) {
+      } else if (pkgvalue == 2) {
         amount = "5000";
-      } else if (pkgDropdown.value == 3) {
+      } else if (pkgvalue == 3) {
         amount = "25000";
       } else {
         alert("select package");
         return;
       }
-
+      setLoading(true);
       const approve_tx = await stakeTokenContract.approve(
         process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
         ethers.parseUnits(netBVT + "", 18)
       );
       const approve_reciept = await approve_tx.wait();
       if (approve_reciept) {
-        const tx = await logicContract.ReTopup(pkgDropdown.value);
+        const tx = await logicContract.ReTopup(pkgvalue);
         const reciept = await tx.wait();
         if (reciept) {
           Swal.fire({
@@ -130,10 +144,26 @@ const ReTopup = () => {
             confirmButtonText: "OK",
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.reload();
+              setLoading(false);
             }
           });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: reciept,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+          setLoading(false);
         }
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: approve_reciept,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        setLoading(false);
       }
     } catch (err) {
       Swal.fire({
@@ -142,57 +172,69 @@ const ReTopup = () => {
         icon: "error",
         confirmButtonText: "OK",
       });
+      setLoading(false);
     }
   };
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h2 className="card-title">Re-Topup</h2>
-      </div>
-      <div className="card-body">
-        <div className="row">
-          <div className="form-group">
-            <label>Package</label>
-            <select
-              className="form-control"
-              id="ddPackage"
-              onChange={fn_CalculateBVT}
-              name="package"
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="card">
+          <div className="card-header">
+            <h2 className="card-title">Re-Topup</h2>
+          </div>
+          <div className="card-body">
+            <div className="row">
+              <div className="form-group">
+                <label>Package</label>
+                <select
+                  className="form-control"
+                  id="ddPackage"
+                  defaultValue={pkgvalue}
+                  onChange={fn_CalculateBVT}
+                  name="package"
+                >
+                  <option value="">Select Package</option>
+                  <option value="0">54 USDT Normal</option>
+                  <option value="1">215 USDT Manager</option>
+                  <option value="2">5000 BVT Super Manager</option>
+                  <option value="3">25000 BVT Diamond</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Current BVT Price:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  readOnly
+                  value={currentPrice}
+                />
+              </div>
+              <div className="form-group">
+                <label>Net BVT:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  readOnly
+                  value={netBVT}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="card-footer">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={fn_submit}
             >
-              <option value="">Select Package</option>
-              <option value="0">54 USDT Normal</option>
-              <option value="1">215 USDT Manager</option>
-              <option value="2">5000 BVT Super Manager</option>
-              <option value="3">25000 BVT Diamond</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Current BVT Price:</label>
-            <input
-              type="text"
-              className="form-control"
-              readOnly
-              value={currentPrice}
-            />
-          </div>
-          <div className="form-group">
-            <label>Net BVT:</label>
-            <input
-              type="text"
-              className="form-control"
-              readOnly
-              value={netBVT}
-            />
+              Submit
+            </button>
           </div>
         </div>
-      </div>
-      <div className="card-footer">
-        <button type="button" className="btn btn-primary" onClick={fn_submit}>
-          Submit
-        </button>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
