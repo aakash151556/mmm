@@ -61,18 +61,7 @@ const Dashboard = () => {
   const [superManagerInvestment, setSuperManagerInvestment] = useState([]);
   const [diamondInvestment, setDiamondInvestment] = useState([]);
 
-  const [elapsedNormal, setElapsedNormal] = useState(0);
-  const [startTimeNormal, setStartTimeNormal] = useState(0);
 
-  const formatTime = (ms) => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const days = Math.floor(totalSeconds / (3600 * 24));
-    const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    return { days, hours, minutes, seconds };
-  };
 
   const fn_HandleChange = () => {};
   const fn_CopyRefLink = async () => {
@@ -100,13 +89,10 @@ const Dashboard = () => {
     );
   }, [selectedAccount]);
 
-
-
-
-   const fetchInvestmentData = async (account) => {
+  const fetchInvestmentData = async (account) => {
     if (!storageContract || !account) return;
-      try {
-  const ranks = ["normal", "manager", "s_manager", "diamond"];
+    try {
+      const ranks = ["normal", "manager", "s_manager", "diamond"];
       const setInvestmentsMap = {
         0: setNormalInvestment,
         1: setManagerInvestment,
@@ -129,7 +115,6 @@ const Dashboard = () => {
       };
 
       for (let i = 0; i <= 3; i++) {
-        
         const [directBusiness, teamBusiness] = await Promise.all([
           storageContract?.GetBussinessTotal(selectedAccount, i, i, 0),
           storageContract?.GetBussinessTotal(selectedAccount, i, i, 1),
@@ -190,87 +175,81 @@ const Dashboard = () => {
         }
       }
 
-      
       setNormalInvestment(allInvestments[0]);
       setManagerInvestment(allInvestments[1]);
       setSuperManagerInvestment(allInvestments[2]);
       setDiamondInvestment(allInvestments[3]);
 
-      
       setBussiness(obj);
-       } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
   };
 
-
-
-
-
   const fetchDashboardData = async () => {
-      if (!selectedAccount || !storageContract) return;
-  
-      try {
-        const [
-          userData,
-          directIncome,
-          levelIncome,
-          normalIncome,
-          managerIncome,
-          superManagerIncome,
-          diamondManagerIncome,
-          teamCount,
-          sponsorCount,
-          manager10Count,
-          mgrTeam,
-          smgrTeam,
-          dgrTeam,
-          mgrDirect,
-          smgrDirect,
-          dgrDirect,
-        ] = await Promise.all([
-          storageContract.GetUser(selectedAccount),
-          storageContract.GetAllIncome(selectedAccount, 3),
-          storageContract.GetAllIncome(selectedAccount, 4),
-          storageContract.GetAllIncome(selectedAccount, 5),
-          storageContract.GetAllIncome(selectedAccount, 6),
-          storageContract.GetAllIncome(selectedAccount, 7),
-          storageContract.GetAllIncome(selectedAccount, 8),
-          storageContract.GetTeamCount(selectedAccount),
-          storageContract.GetSponsorsCount(selectedAccount),
-          storageContract.GetManagerDirectCount(selectedAccount),
-          storageContract.GetRankWiseTeamCount(selectedAccount, 1),
-          storageContract.GetRankWiseTeamCount(selectedAccount, 2),
-          storageContract.GetRankWiseTeamCount(selectedAccount, 3),
-          storageContract.GetRankSponsorsCount(selectedAccount, 1),
-          storageContract.GetRankSponsorsCount(selectedAccount, 2),
-          storageContract.GetRankSponsorsCount(selectedAccount, 3),
-        ]);
-  
-        setUser(userData);
-        setDirectIncome(ethers.formatEther(directIncome));
-        setLevelIncome(ethers.formatEther(levelIncome));
-        setNormalIncome(ethers.formatEther(normalIncome));
-        setManagerIncome(ethers.formatEther(managerIncome));
-        setSuperManagerIncome(ethers.formatEther(superManagerIncome));
-        setDiamondManagerIncome(ethers.formatEther(diamondManagerIncome));
-        setTeam(teamCount);
-        setDirect(sponsorCount);
-        setManager10Direct(manager10Count);
-        setManagerTeam(mgrTeam);
-        setSuperManagerTeam(smgrTeam);
-        setDiamondTeam(dgrTeam);
-        setManagerDirect(mgrDirect);
-        setSuperManagerDirect(smgrDirect);
-        setDiamondDirect(dgrDirect);
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      }
-    };
+    if (!selectedAccount || !storageContract) return;
+
+    try {
+      const [
+        userData,
+        directIncome,
+        levelIncome,
+        normalIncome,
+        managerIncome,
+        superManagerIncome,
+        diamondManagerIncome,
+        teamCount,
+        sponsorCount,
+        manager10Count,
+        mgrTeam,
+        smgrTeam,
+        dgrTeam,
+        mgrDirect,
+        smgrDirect,
+        dgrDirect,
+      ] = await Promise.all([
+        storageContract.GetUser(selectedAccount),
+        storageContract.GetAllIncome(selectedAccount, 3),
+        storageContract.GetAllIncome(selectedAccount, 4),
+        storageContract.GetAllIncome(selectedAccount, 5),
+        storageContract.GetAllIncome(selectedAccount, 6),
+        storageContract.GetAllIncome(selectedAccount, 7),
+        storageContract.GetAllIncome(selectedAccount, 8),
+        storageContract.GetTeamCount(selectedAccount),
+        storageContract.GetSponsorsCount(selectedAccount),
+        storageContract.GetManagerDirectCount(selectedAccount),
+        storageContract.GetRankWiseTeamCount(selectedAccount, 1),
+        storageContract.GetRankWiseTeamCount(selectedAccount, 2),
+        storageContract.GetRankWiseTeamCount(selectedAccount, 3),
+        storageContract.GetRankSponsorsCount(selectedAccount, 1),
+        storageContract.GetRankSponsorsCount(selectedAccount, 2),
+        storageContract.GetRankSponsorsCount(selectedAccount, 3),
+      ]);
+
+      setUser(userData);
+      setDirectIncome(ethers.formatEther(directIncome));
+      setLevelIncome(ethers.formatEther(levelIncome));
+      setNormalIncome(ethers.formatEther(normalIncome));
+      setManagerIncome(ethers.formatEther(managerIncome));
+      setSuperManagerIncome(ethers.formatEther(superManagerIncome));
+      setDiamondManagerIncome(ethers.formatEther(diamondManagerIncome));
+      setTeam(teamCount);
+      setDirect(sponsorCount);
+      setManager10Direct(manager10Count);
+      setManagerTeam(mgrTeam);
+      setSuperManagerTeam(smgrTeam);
+      setDiamondTeam(dgrTeam);
+      setManagerDirect(mgrDirect);
+      setSuperManagerDirect(smgrDirect);
+      setDiamondDirect(dgrDirect);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
+  };
 
   useEffect(() => {
     const bind = async () => {
-       if (!selectedAccount || !storageContract) return;
+      if (!selectedAccount || !storageContract) return;
 
       // const {
       //   _sno,
@@ -548,14 +527,14 @@ const Dashboard = () => {
       // }
 
       // setBussiness(obj);
-    await fetchDashboardData();
+      await fetchDashboardData();
       await fetchInvestmentData(selectedAccount);
     };
     bind();
   }, [selectedAccount, storageContract]);
 
   useEffect(() => {
-   // if (user._rt == 0) setRankName("Member");
+    // if (user._rt == 0) setRankName("Member");
     // else if (user._rt == 1) setRankName("Manager");
     // else if (user._rt == 2) setRankName("Super Manager");
     // else if (user._rt == 3) setRankName("Diamond");

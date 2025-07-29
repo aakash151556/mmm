@@ -162,12 +162,17 @@ const Register = ({ params }) => {
         console.log(approve_reciept);
       }
     } catch (err) {
+      console.log(err)
       setLoading(false);
       Swal.fire({
         title: "Error!",
-        text: err,
+        text: "try again",
         icon: "error",
         confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
       });
     }
   };

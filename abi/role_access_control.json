@@ -153,19 +153,6 @@
 				"type": "address"
 			}
 		],
-		"name": "SetClosingAccount",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
 		"name": "SetLogicAccount",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -179,7 +166,7 @@
 				"type": "address"
 			}
 		],
-		"name": "SetStakingAccount",
+		"name": "SetPayoutAccount",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

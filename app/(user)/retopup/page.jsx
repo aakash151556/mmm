@@ -81,7 +81,7 @@ const ReTopup = () => {
       alert("select package");
       return;
     }
-    setPkgValue(pkgid)
+    setPkgValue(pkgid);
     let amount = 0;
     if (pkgid == 0) {
       amount = 54;
@@ -107,9 +107,8 @@ const ReTopup = () => {
 
   const fn_submit = async (e) => {
     e.preventDefault();
-    
 
-    if (pkgvalue == null || pkgvalue=="") {
+    if (pkgvalue == null || pkgvalue == "") {
       alert("select package");
       return;
     }
@@ -166,13 +165,17 @@ const ReTopup = () => {
         setLoading(false);
       }
     } catch (err) {
+      setLoading(false);
       Swal.fire({
         title: "Error!",
         text: err,
         icon: "error",
         confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
       });
-      setLoading(false);
     }
   };
 
