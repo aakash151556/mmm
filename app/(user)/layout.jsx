@@ -56,6 +56,7 @@ export default function RootLayout({ children }) {
       setStorageData(data);
     }
   }, []);
+
   const handleWallet =useCallback(async () => {
     try {
       setIsLoading(true);
@@ -185,6 +186,11 @@ if (selectedAccount === state.selectedAccount && chainId === state.chainId) retu
                 <li className="nav-item">
                   <a className="nav-link" href="#">
                     Bussiness Plan
+                  </a>
+                </li>
+                 <li className="nav-item">
+                  <a className="nav-link" href="/claim">
+                    Claim Direct/Level
                   </a>
                 </li>
               </ul>

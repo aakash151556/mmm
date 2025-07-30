@@ -207,7 +207,7 @@ const AccessControl = () => {
           </button>
         </div>
       </div>
-
+<hr/>
       <div className="card">
         <div className="card-header">
           <h2 className="card-title">Set Payout Contract</h2>
@@ -236,7 +236,7 @@ const AccessControl = () => {
       </div>
 
 
-
+<hr/>
        <div className="card">
         <div className="card-header">
           <h2 className="card-title">Set Team Contract</h2>

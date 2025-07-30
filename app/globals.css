@@ -398,3 +398,11 @@ li.nav-item {
         transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     }
 }
+
+.withes{
+  width: 100%;
+}
+
+.whitespace{
+    white-space: nowrap;
+}

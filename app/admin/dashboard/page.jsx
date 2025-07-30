@@ -11,13 +11,15 @@ import Swal from "sweetalert2";
 
 const Dashboard = () => {
   const {
-    selectedAccount,
+    
     logicContract,
     storageContract,
     teamBussinessContract,
     stakeTokenContract,
     stakeUSDTContract,
   } = useContext(Web3Context);
+  
+
   const [refLink, setRefLink] = useState("");
   const [copied, setCopied] = useState(false);
   const [refStatus, setRefStatus] = useState(false);
@@ -55,12 +57,16 @@ const Dashboard = () => {
     diamond: { self: 0, direct: 0, team: 0 },
   });
   const [rankName, setRankName] = useState("Member");
+  const [selected, setSelected] = useState();
 
   const [normalInvestment, setNormalInvestment] = useState([]);
   const [managerInvestment, setManagerInvestment] = useState([]);
   const [superManagerInvestment, setSuperManagerInvestment] = useState([]);
   const [diamondInvestment, setDiamondInvestment] = useState([]);
 
+  useEffect(()=>{
+    setSelected(localStorage.getItem("selectedAccount"))
+  },[])
 
 
   const fn_HandleChange = () => {};
@@ -85,9 +91,9 @@ const Dashboard = () => {
         "//" +
         window.location.host +
         "/register/" +
-        selectedAccount
+        selected
     );
-  }, [selectedAccount]);
+  }, [selected]);
 
   const fetchInvestmentData = async (account) => {
     if (!storageContract || !account) return;
@@ -116,8 +122,8 @@ const Dashboard = () => {
 
       for (let i = 0; i <= 3; i++) {
         const [directBusiness, teamBusiness] = await Promise.all([
-          storageContract?.GetBussinessTotal(selectedAccount, i, i, 0),
-          storageContract?.GetBussinessTotal(selectedAccount, i, i, 1),
+          storageContract?.GetBussinessTotal(selected, i, i, 0),
+          storageContract?.GetBussinessTotal(selected, i, i, 1),
         ]);
 
         const rankKey = ranks[i];
@@ -127,14 +133,14 @@ const Dashboard = () => {
         }
 
         const lastTopUp = await storageContract?.GetLastTopup(
-          selectedAccount,
+          selected,
           i
         );
         const topUpCount = parseInt(lastTopUp);
 
         for (let k = 0; k <= topUpCount; k++) {
           const detail = await storageContract?.GetTopupDetail(
-            selectedAccount,
+            selected,
             i,
             k,
             1
@@ -187,10 +193,9 @@ const Dashboard = () => {
   };
 
   const fetchDashboardData = async () => {
-    if (!selectedAccount || !storageContract) return;
+    if (!selected || !storageContract) return;
 
     try {
-      debugger
       const [
         userData,
         directIncome,
@@ -209,22 +214,22 @@ const Dashboard = () => {
         smgrDirect,
         dgrDirect,
       ] = await Promise.all([
-        storageContract.GetUser(selectedAccount),
-        storageContract.GetAllIncome(selectedAccount, 3),
-        storageContract.GetAllIncome(selectedAccount, 4),
-        storageContract.GetAllIncome(selectedAccount, 5),
-        storageContract.GetAllIncome(selectedAccount, 6),
-        storageContract.GetAllIncome(selectedAccount, 7),
-        storageContract.GetAllIncome(selectedAccount, 8),
-        storageContract.GetTeamCount(selectedAccount),
-        storageContract.GetSponsorsCount(selectedAccount),
-        storageContract.GetManagerDirectCount(selectedAccount),
-        storageContract.GetRankWiseTeamCount(selectedAccount, 1),
-        storageContract.GetRankWiseTeamCount(selectedAccount, 2),
-        storageContract.GetRankWiseTeamCount(selectedAccount, 3),
-        storageContract.GetRankSponsorsCount(selectedAccount, 1),
-        storageContract.GetRankSponsorsCount(selectedAccount, 2),
-        storageContract.GetRankSponsorsCount(selectedAccount, 3),
+        storageContract.GetUser(selected),
+        storageContract.GetAllIncome(selected, 3),
+        storageContract.GetAllIncome(selected, 4),
+        storageContract.GetAllIncome(selected, 5),
+        storageContract.GetAllIncome(selected, 6),
+        storageContract.GetAllIncome(selected, 7),
+        storageContract.GetAllIncome(selected, 8),
+        storageContract.GetTeamCount(selected),
+        storageContract.GetSponsorsCount(selected),
+        storageContract.GetManagerDirectCount(selected),
+        storageContract.GetRankWiseTeamCount(selected, 1),
+        storageContract.GetRankWiseTeamCount(selected, 2),
+        storageContract.GetRankWiseTeamCount(selected, 3),
+        storageContract.GetRankSponsorsCount(selected, 1),
+        storageContract.GetRankSponsorsCount(selected, 2),
+        storageContract.GetRankSponsorsCount(selected, 3),
       ]);
 
       setUser(userData);
@@ -250,7 +255,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const bind = async () => {
-      if (!selectedAccount || !storageContract) return;
+      if (!selected || !storageContract) return;
 
       // const {
       //   _sno,
@@ -262,7 +267,7 @@ const Dashboard = () => {
       //   _status,
       //   _entryby,
       //   _rt,
-      // } = await storageContract?.GetUser(selectedAccount);
+      // } = await storageContract?.GetUser(selected);
 
       // setUser({
       //   _sno,
@@ -276,65 +281,65 @@ const Dashboard = () => {
       //   _rt,
       // });
 
-      // const di = await storageContract?.GetAllIncome(selectedAccount, 3);
+      // const di = await storageContract?.GetAllIncome(selected, 3);
       // setDirectIncome(ethers.formatEther(di));
 
-      // const li = await storageContract?.GetAllIncome(selectedAccount, 4);
+      // const li = await storageContract?.GetAllIncome(selected, 4);
       // setLevelIncome(ethers.formatEther(li));
 
-      // const ni = await storageContract?.GetAllIncome(selectedAccount, 5);
+      // const ni = await storageContract?.GetAllIncome(selected, 5);
       // setNormalIncome(ethers.formatEther(ni));
 
-      // const mi = await storageContract?.GetAllIncome(selectedAccount, 6);
+      // const mi = await storageContract?.GetAllIncome(selected, 6);
       // setManagerIncome(ethers.formatEther(mi));
 
-      // const smi = await storageContract?.GetAllIncome(selectedAccount, 7);
+      // const smi = await storageContract?.GetAllIncome(selected, 7);
       // setSuperManagerIncome(ethers.formatEther(smi));
 
-      // const dmi = await storageContract?.GetAllIncome(selectedAccount, 8);
+      // const dmi = await storageContract?.GetAllIncome(selected, 8);
       // setDiamondManagerIncome(ethers.formatEther(dmi));
 
-      // const t = await storageContract?.GetTeamCount(selectedAccount);
+      // const t = await storageContract?.GetTeamCount(selected);
       // setTeam(t);
 
-      // const s = await storageContract?.GetSponsorsCount(selectedAccount);
+      // const s = await storageContract?.GetSponsorsCount(selected);
       // setDirect(s);
 
-      // const mdt = await storageContract?.GetManagerDirectCount(selectedAccount);
+      // const mdt = await storageContract?.GetManagerDirectCount(selected);
       // setManager10Direct(mdt);
 
       // const mgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selectedAccount,
+      //   selected,
       //   1
       // );
       // setManagerTeam(mgrt);
 
       // const smgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selectedAccount,
+      //   selected,
       //   2
       // );
       // setSuperManagerTeam(smgrt);
 
       // const dgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selectedAccount,
+      //   selected,
       //   3
       // );
       // setDiamondTeam(dgrt);
 
       // const md = await storageContract?.GetRankSponsorsCount(
-      //   selectedAccount,
+      //   selected,
       //   1
       // );
       // setManagerDirect(md);
 
       // const sd = await storageContract?.GetRankSponsorsCount(
-      //   selectedAccount,
+      //   selected,
       //   2
       // );
       // setSuperManagerDirect(sd);
 
       // const dd = await storageContract?.GetRankSponsorsCount(
-      //   selectedAccount,
+      //   selected,
       //   3
       // );
       // setDiamondDirect(dd);
@@ -351,30 +356,30 @@ const Dashboard = () => {
       // let p = 3;
       // while (i <= p) {
       //   const member_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selectedAccount, i, 0, 0);
+      //     await storageContract?.GetBussinessTotal(selected, i, 0, 0);
       //   const manager_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selectedAccount, i, 1, 0);
+      //     await storageContract?.GetBussinessTotal(selected, i, 1, 0);
       //   const super_manager_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selectedAccount, i, 2, 0);
+      //     await storageContract?.GetBussinessTotal(selected, i, 2, 0);
       //   const diamond_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selectedAccount, i, 3, 0);
+      //     await storageContract?.GetBussinessTotal(selected, i, 3, 0);
 
       //   const member_team_bussiness = await storageContract?.GetBussinessTotal(
-      //     selectedAccount,
+      //     selected,
       //     i,
       //     0,
       //     1
       //   );
       //   const manager_team_bussiness = await storageContract?.GetBussinessTotal(
-      //     selectedAccount,
+      //     selected,
       //     i,
       //     1,
       //     1
       //   );
       //   const super_manager_team_bussiness =
-      //     await storageContract?.GetBussinessTotal(selectedAccount, i, 2, 1);
+      //     await storageContract?.GetBussinessTotal(selected, i, 2, 1);
       //   const diamond_team_bussiness = await storageContract?.GetBussinessTotal(
-      //     selectedAccount,
+      //     selected,
       //     i,
       //     3,
       //     1
@@ -412,7 +417,7 @@ const Dashboard = () => {
       //   }
 
       //   const lasttopup = await storageContract?.GetLastTopup(
-      //     selectedAccount,
+      //     selected,
       //     i
       //   );
       //   const kp = parseInt(lasttopup);
@@ -430,7 +435,7 @@ const Dashboard = () => {
       //       round,
       //       status,
       //       timestamp,
-      //     } = await storageContract?.GetTopupDetail(selectedAccount, i, k, 1);
+      //     } = await storageContract?.GetTopupDetail(selected, i, k, 1);
       //     console.log(
       //       userAddress,
       //       pkgid,
@@ -529,10 +534,10 @@ const Dashboard = () => {
 
       // setBussiness(obj);
       await fetchDashboardData();
-      await fetchInvestmentData(selectedAccount);
+      await fetchInvestmentData(selected);
     };
     bind();
-  }, [selectedAccount, storageContract]);
+  }, [selected, storageContract]);
 
   useEffect(() => {
     // if (user._rt == 0) setRankName("Member");
@@ -557,7 +562,7 @@ const Dashboard = () => {
               </div>
               <div className="card-body">
                 <p className="card-text">
-                  <b>Your Account :</b> <span>{selectedAccount}</span>
+                  <b>Your Account :</b> <span>{selected}</span>
                 </p>
                 <p className="card-text">
                   <b>Your Rank :</b> <span>{rankName}</span>
