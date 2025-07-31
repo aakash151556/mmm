@@ -94,7 +94,7 @@ const Claim = () => {
        
         if (currentPrice > 0) {
          
-            const totalbvt = Number(amount) * Number(currentPrice);
+            const totalbvt = Number(amount) / Number(currentPrice);
             setNetBVT(totalbvt);
             const ac=Number(totalbvt)*0.1;
             setAdminCharge(ac)
