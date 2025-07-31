@@ -47,7 +47,7 @@ bindCurrenntAllowance();
     }
 
     const fundReciever=await storageContract.GetFundRecieverAddress();
-    if(selectedAccount!==fundReciever){
+    if(selectedAccount.toString()!=fundReciever.toString()){
           alert("Invalid fund reciever account");
             return;
     }
