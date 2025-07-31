@@ -47,11 +47,11 @@ bindCurrenntAllowance();
     }
 
     const fundReciever=await storageContract.GetFundRecieverAddress();
-    console.log(fundReciever,selectedAccount)
-    if(selectedAccount.toString()!=fundReciever.toString()){
-          alert("Invalid fund reciever account");
-            return;
-    }
+    // console.log(fundReciever,selectedAccount)
+    // if(selectedAccount.toString()!=fundReciever.toString()){
+    //       alert("Invalid fund reciever account");
+    //         return;
+    // }
 
     try {
       const approve_tx = await stakeTokenContract.approve(
