@@ -39,7 +39,7 @@ bindCurrenntAllowance();
 
   const fn_submit = async (e) => {
     e.preventDefault();
-    const allowance = document.querySelector("#Allowance");
+    const allowance = document.querySelector("#Allowance").value;
 
     if (allowance == "0" || allowance == "") {
       alert("Enter allowance");
