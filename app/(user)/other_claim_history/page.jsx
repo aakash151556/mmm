@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import Web3Context from "@/components/web3context";
 import IncomeName from "@/components/income_name";
 
-const LevelIncomeHistory = () => {
+const OtherClaimHistory = () => {
   const { provider, selectedAccount, eventContract, historyContract } =
     useContext(Web3Context);
   const [transactionHistory, setTransactionHistory] = useState([]);
@@ -12,9 +12,9 @@ const LevelIncomeHistory = () => {
   const [drtotal, setDrTotal] = useState("0");
 
   const bind = async () => {
-    if (!historyContract) return;
-    const ledger = await historyContract.GetLevelBonus(selectedAccount);
-
+    if (!historyContract && !selectedAccount) return;
+    const ledger = await historyContract.GetClaimDetail(selectedAccount, 0);
+    console.log(ledger);
     const clonedLedger = [...ledger];
     for (let i = 0; i < clonedLedger.length - 1; i++) {
       for (let j = 0; j < clonedLedger.length - 1 - i; j++) {
@@ -58,27 +58,27 @@ const LevelIncomeHistory = () => {
       <div className="container">
         <div className="card mt-3">
           <div className="card-header bg-primary text-white">
-            <h4 className="card-title">Direct Income History</h4>
+            <h2 className="card-title">Claim History</h2>
           </div>
           <div className="card-body">
             <div className="row">
               <div className="col-md-12  table-responsive">
                 <table className=" table table-bordered table-striped">
                   <thead>
-                    <tr>
+                    {/* <tr>
                       <th colSpan="2" style={{ textAlign: "right" }}>
                         Total
                       </th>
                       <td>{crtotal}</td>
 
                       <td></td>
-                    </tr>
+                    </tr> */}
 
                     <tr>
                       <th>#</th>
-                      <th>From</th>
-                      <th>Income</th>
-                        <th>Level</th>
+                      <th>USDT</th>
+                      <th>Price</th>
+                      <th>BVT</th>
                       <th>Date</th>
                     </tr>
                   </thead>
@@ -87,9 +87,10 @@ const LevelIncomeHistory = () => {
                       transactionHistory.map((event, key) => (
                         <tr key={key}>
                           <td>{key + 1}</td>
-                          <td>{event[0]}</td>
+
+                          <td>{ethers.formatEther(event[0])}</td>
                           <td>{ethers.formatEther(event[1])}</td>
-<td>{event[2]}</td>
+                          <td>{ethers.formatEther(event[2])}</td>
                           <td>
                             {new Date(
                               parseInt(event[3]) * 1000
@@ -108,4 +109,4 @@ const LevelIncomeHistory = () => {
   );
 };
 
-export default LevelIncomeHistory;
+export default OtherClaimHistory;

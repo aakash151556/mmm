@@ -239,27 +239,19 @@ if (selectedAccount === state.selectedAccount && chainId === state.chainId) retu
               <Link className="nav-link" href="/transaction">
                 My Wallet
               </Link>
-              <Link className="nav-link" href="/stake_income_history">
-                Investment Income
+              <Link className="nav-link" href="/stake_claim_history">
+                Investment Claim History
+              </Link>
+               <Link className="nav-link" href="/other_claim_history">
+                Other Claim History
               </Link>
               <Link className="nav-link" href="/direct_income_history">
                 Direct Income
               </Link>
-              <Link className="nav-link" href="#">
-                Level Income
-              </Link>
-              <Link className="nav-link" href="#">
-                Direct Team
-              </Link>
-              <Link className="nav-link" href="#">
-                Downline Team
-              </Link>
-              <Link className="nav-link" href="#">
-                Level Team
-              </Link>
-              <Link className="nav-link" href="#">
-                Level Bussiness
-              </Link>
+              <Link className="nav-link" href="/level_wise_team">
+                Level Wise Team
+              </Link>                        
+            
             </nav>
           </div>
         </div>
