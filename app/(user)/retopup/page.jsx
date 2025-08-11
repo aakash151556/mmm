@@ -29,7 +29,7 @@ const ReTopup = () => {
         const currentPrice = await storageContract.GetCurrentPrice();
         const currentPriceInETH = ethers.formatEther(currentPrice);
         if (!price) price = currentPriceInETH;
-        if (Number(price) !== Number(currentPriceInETH)) {
+        if (Number(currentPriceInETH) !== Number(currentPriceInETH)) {
           const rpcProvider = new ethers.JsonRpcProvider(
             process.env.NEXT_PUBLIC_BSC_RPC_URL
           );

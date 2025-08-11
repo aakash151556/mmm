@@ -31,7 +31,7 @@ const Register = ({ params }) => {
         const currentPrice = await storageContract.GetCurrentPrice();
         const currentPriceInETH = ethers.formatEther(currentPrice);
         if (!price) price = currentPriceInETH;
-        if (Number(price) !== Number(currentPriceInETH)) {
+        if (Number(currentPriceInETH) !== Number(currentPriceInETH)) {
           const rpcProvider = new ethers.JsonRpcProvider(
             process.env.NEXT_PUBLIC_BSC_RPC_URL
           );
@@ -40,26 +40,26 @@ const Register = ({ params }) => {
             rpcProvider
           );
 
-          const sgContract = new ethers.Contract(
-            process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
-            storageContractABIF,
-            wallet
-          );
+          // const sgContract = new ethers.Contract(
+          //   process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
+          //   storageContractABIF,
+          //   wallet
+          // );
 
-          const transactionResponse = await sgContract.SetCurrentPrice(
-            process.env.NEXT_PUBLIC_PUBLIC_KEY,
-            ethers.parseEther(price + "", 18)
-          );
-          const reciept = await transactionResponse.wait();
-          if (reciept) {
-            setLoading(false);
-            setCurrentPrice(price);
-            console.log("price update successs");
-          } else {
-            setLoading(false);
-            setCurrentPrice(price);
-            console.log(reciept);
-          }
+          // const transactionResponse = await sgContract.SetCurrentPrice(
+          //   process.env.NEXT_PUBLIC_PUBLIC_KEY,
+          //   ethers.parseEther(price + "", 18)
+          // );
+          // const reciept = await transactionResponse.wait();
+          // if (reciept) {
+          //   setLoading(false);
+          //   setCurrentPrice(price);
+          //   console.log("price update successs");
+          // } else {
+          //   setLoading(false);
+          //   setCurrentPrice(price);
+          //   console.log(reciept);
+          // }
         } else {
           setLoading(false);
           setCurrentPrice(currentPriceInETH);
