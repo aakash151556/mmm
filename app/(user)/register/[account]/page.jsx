@@ -32,13 +32,13 @@ const Register = ({ params }) => {
         const currentPriceInETH = ethers.formatEther(currentPrice);
         if (!price) price = currentPriceInETH;
         if (Number(currentPriceInETH) !== Number(currentPriceInETH)) {
-          const rpcProvider = new ethers.JsonRpcProvider(
-            process.env.NEXT_PUBLIC_BSC_RPC_URL
-          );
-          const wallet = new ethers.Wallet(
-            process.env.NEXT_PUBLIC_PRIVATE_KEY,
-            rpcProvider
-          );
+          // const rpcProvider = new ethers.JsonRpcProvider(
+          //   process.env.NEXT_PUBLIC_BSC_RPC_URL
+          // );
+          // const wallet = new ethers.Wallet(
+          //   process.env.NEXT_PUBLIC_PRIVATE_KEY,
+          //   rpcProvider
+          // );
 
           // const sgContract = new ethers.Contract(
           //   process.env.NEXT_PUBLIC_STORAGE_CONTRACT,
