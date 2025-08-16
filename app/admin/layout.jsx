@@ -260,7 +260,9 @@ export default function RootLayout({ children }) {
               <Link className="nav-link" href="/admin/register">
                 Register
               </Link>
-             
+               <Link className="nav-link" href="/admin/change_rate">
+                Change Current Rate
+              </Link>
               <Link className="nav-link" href="/admin/claim_allowance">
                 Set Claim Allowance
               </Link>
