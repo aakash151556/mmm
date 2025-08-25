@@ -11,14 +11,12 @@ import Swal from "sweetalert2";
 
 const Dashboard = () => {
   const {
-    
     logicContract,
     storageContract,
     teamBussinessContract,
     stakeTokenContract,
     stakeUSDTContract,
   } = useContext(Web3Context);
-  
 
   const [refLink, setRefLink] = useState("");
   const [copied, setCopied] = useState(false);
@@ -63,16 +61,12 @@ const Dashboard = () => {
   const [managerInvestment, setManagerInvestment] = useState([]);
   const [superManagerInvestment, setSuperManagerInvestment] = useState([]);
   const [diamondInvestment, setDiamondInvestment] = useState([]);
-
-
-
-  
-  useEffect(()=>{
-   
-    
-    setSelected(localStorage.getItem("selectedAccount"))
-  },[])
-
+  const [loadingNormalPkgId, setLoadingNormalPkgId] = useState(null);
+  const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
+  const [loadingRound, setLoadingRound] = useState(null);
+  useEffect(() => {
+    setSelected(localStorage.getItem("selectedAccount"));
+  }, []);
 
   const fn_HandleChange = () => {};
   const fn_CopyRefLink = async () => {
@@ -137,40 +131,19 @@ const Dashboard = () => {
           obj[rankKey].team += Number(ethers.formatEther(teamBusiness));
         }
 
-        const lastTopUp = await storageContract?.GetLastTopup(
-          selected,
-          i
-        );
+        const lastTopUp = await storageContract?.GetLastTopup(selected, i);
         const topUpCount = parseInt(lastTopUp);
 
         for (let k = 0; k <= topUpCount; k++) {
-          const detail = await storageContract?.GetTopupDetail(
-            selected,
-            i,
-            k,
-            1
-          );
+          for (let r = 1; r <= 4; r++) {
+            const detail = await storageContract?.GetTopupDetail(
+              selected,
+              i,
+              k,
+              r
+            );
 
-          const {
-            pkgid,
-            usdt,
-            price,
-            token,
-            total,
-            upgrade,
-            income,
-            round,
-            status,
-            timestamp,
-          } = detail;
-
-          const usdtVal = Number(ethers.formatEther(usdt));
-          const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
-
-          if (shouldPush) {
-            obj[rankKey].self += usdtVal;
-
-            allInvestments[i].push({
+            const {
               pkgid,
               usdt,
               price,
@@ -181,7 +154,27 @@ const Dashboard = () => {
               round,
               status,
               timestamp,
-            });
+            } = detail;
+
+            const usdtVal = Number(ethers.formatEther(usdt));
+            const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
+
+            if (shouldPush) {
+              obj[rankKey].self += usdtVal;
+
+              allInvestments[i].push({
+                pkgid,
+                usdt,
+                price,
+                token,
+                total,
+                upgrade,
+                income,
+                round,
+                status,
+                timestamp,
+              });
+            }
           }
         }
       }
@@ -556,8 +549,6 @@ const Dashboard = () => {
     else setRefStatus(false);
   }, [user]);
 
-  
-
   return (
     <>
       <div className="row">
@@ -876,10 +867,22 @@ const Dashboard = () => {
                         )
                       ).toLocaleString()}
                     </td>
-                    <td>
-                      <button type="button" onClick={fn_ClaimNormalInvestment}  className="btn btn-sm btn-primary">
-                        Claim
-                      </button>
+                   <td>
+                      {val.status ? (
+                        
+                         Math.floor((Date.now() -(parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
+                        <button
+                          type="button"
+                        
+                          className="btn btn-sm btn-primary"
+                        >
+                          {loadingNormalPkgId === val.pkgid
+                            ? "Processing..."
+                            : "Claim"}
+                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
+                      ) : (
+                        "Claimed"
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -922,10 +925,22 @@ const Dashboard = () => {
                         )
                       ).toLocaleString()}
                     </td>
-                    <td>
-                      <button type="button" className="btn btn-sm btn-primary">
-                        Claim
-                      </button>
+                     <td>
+                      {val.status ? (
+                        
+                          Math.floor((Date.now() -(parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
+                        <button
+                          type="button"                          
+                          className="btn btn-sm btn-primary"
+                        >
+                          {loadingManagerPkgId === val.pkgid &&
+                          loadingRound === index
+                            ? "Processing..."
+                            : "Claim"}
+                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
+                      ) : (
+                        "Claimed"
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -970,7 +985,7 @@ const Dashboard = () => {
                     </td>
                     <td>
                       <button type="button" className="btn btn-sm btn-primary">
-                        Claim
+                        Wait
                       </button>
                     </td>
                   </tr>
@@ -1016,7 +1031,7 @@ const Dashboard = () => {
                     </td>
                     <td>
                       <button type="button" className="btn btn-sm btn-primary">
-                        Claim
+                        Wait
                       </button>
                     </td>
                   </tr>

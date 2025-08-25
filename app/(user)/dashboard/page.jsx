@@ -133,7 +133,7 @@ const Dashboard = () => {
         const topUpCount = parseInt(lastTopUp);
 
         for (let k = 0; k <= topUpCount; k++) {
-          for (let r = 1; r <= 1; r++) {
+          for (let r = 1; r <= 4; r++) {
             const detail = await storageContract?.GetTopupDetail(
               selectedAccount,
               i,
@@ -572,7 +572,7 @@ const Dashboard = () => {
     setLoadingRound(round);
     try {
       const res = await logicContract.ClaimStakePayout(1, pkgid, round + 1);
-       if (res) {
+      if (res) {
         Swal.fire({
           title: "Success!",
           text: "Manager Investment Claim Successfull..!",
@@ -908,6 +908,7 @@ const Dashboard = () => {
                     </td>
                     <td>
                       {val.status ? (
+                        Math.floor((Date.now() - (parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
                         <button
                           type="button"
                           disabled={loadingNormalPkgId === val.pkgid}
@@ -917,7 +918,7 @@ const Dashboard = () => {
                           {loadingNormalPkgId === val.pkgid
                             ? "Processing..."
                             : "Claim"}
-                        </button>
+                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
                       ) : (
                         "Claimed"
                       )}
@@ -965,6 +966,7 @@ const Dashboard = () => {
                     </td>
                     <td>
                       {val.status ? (
+                         Math.floor((Date.now() - (parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
                         <button
                           type="button"
                           disabled={
@@ -980,7 +982,7 @@ const Dashboard = () => {
                           loadingRound === index
                             ? "Processing..."
                             : "Claim"}
-                        </button>
+                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
                       ) : (
                         "Claimed"
                       )}
@@ -1027,8 +1029,8 @@ const Dashboard = () => {
                       ).toLocaleString()}
                     </td>
                     <td>
-                      <button type="button" className="btn btn-sm btn-primary">
-                        Claim
+                      <button type="button" className="btn btn-sm btn-primary" >
+                        Wait
                       </button>
                     </td>
                   </tr>
@@ -1074,7 +1076,7 @@ const Dashboard = () => {
                     </td>
                     <td>
                       <button type="button" className="btn btn-sm btn-primary">
-                        Claim
+                        Wait
                       </button>
                     </td>
                   </tr>
