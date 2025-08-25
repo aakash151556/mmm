@@ -133,7 +133,7 @@ const Dashboard = () => {
         const topUpCount = parseInt(lastTopUp);
 
         for (let k = 0; k <= topUpCount; k++) {
-          for (let r = 1; r <= 4; r++) {
+          for (let r = 1; r <= 1; r++) {
             const detail = await storageContract?.GetTopupDetail(
               selectedAccount,
               i,
