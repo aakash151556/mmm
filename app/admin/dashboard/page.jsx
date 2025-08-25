@@ -64,7 +64,12 @@ const Dashboard = () => {
   const [superManagerInvestment, setSuperManagerInvestment] = useState([]);
   const [diamondInvestment, setDiamondInvestment] = useState([]);
 
+
+
+  
   useEffect(()=>{
+   
+    
     setSelected(localStorage.getItem("selectedAccount"))
   },[])
 
@@ -551,6 +556,8 @@ const Dashboard = () => {
     else setRefStatus(false);
   }, [user]);
 
+  
+
   return (
     <>
       <div className="row">
@@ -870,7 +877,7 @@ const Dashboard = () => {
                       ).toLocaleString()}
                     </td>
                     <td>
-                      <button type="button" className="btn btn-sm btn-primary">
+                      <button type="button" onClick={fn_ClaimNormalInvestment}  className="btn btn-sm btn-primary">
                         Claim
                       </button>
                     </td>

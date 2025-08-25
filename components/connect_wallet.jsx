@@ -79,7 +79,7 @@ export const connect_wallet = async () => {
         console.log("No ethereum accounts available");
         return;
       }
-    console.log(selectedAccount)
+    
     provider = new ethers.BrowserProvider(window.ethereum);
 
     signer = await provider.getSigner();

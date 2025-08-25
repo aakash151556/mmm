@@ -60,9 +60,8 @@ const Dashboard = () => {
   const [managerInvestment, setManagerInvestment] = useState([]);
   const [superManagerInvestment, setSuperManagerInvestment] = useState([]);
   const [diamondInvestment, setDiamondInvestment] = useState([]);
-
-
-
+const [loadingNormalPkgId, setLoadingNormalPkgId] = useState(null);
+const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
   const fn_HandleChange = () => {};
   const fn_CopyRefLink = async () => {
     try {
@@ -133,33 +132,15 @@ const Dashboard = () => {
         const topUpCount = parseInt(lastTopUp);
 
         for (let k = 0; k <= topUpCount; k++) {
-          const detail = await storageContract?.GetTopupDetail(
-            selectedAccount,
-            i,
-            k,
-            1
-          );
+          for (let r = 1; r <= 4; r++) {
+            const detail = await storageContract?.GetTopupDetail(
+              selectedAccount,
+              i,
+              k,
+              r
+            );
 
-          const {
-            pkgid,
-            usdt,
-            price,
-            token,
-            total,
-            upgrade,
-            income,
-            round,
-            status,
-            timestamp,
-          } = detail;
-
-          const usdtVal = Number(ethers.formatEther(usdt));
-          const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
-
-          if (shouldPush) {
-            obj[rankKey].self += usdtVal;
-
-            allInvestments[i].push({
+            const {
               pkgid,
               usdt,
               price,
@@ -170,7 +151,27 @@ const Dashboard = () => {
               round,
               status,
               timestamp,
-            });
+            } = detail;
+
+            const usdtVal = Number(ethers.formatEther(usdt));
+            const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
+
+            if (shouldPush) {
+              obj[rankKey].self += usdtVal;
+
+              allInvestments[i].push({
+                pkgid,
+                usdt,
+                price,
+                token,
+                total,
+                upgrade,
+                income,
+                round,
+                status,
+                timestamp,
+              });
+            }
           }
         }
       }
@@ -190,7 +191,7 @@ const Dashboard = () => {
     if (!selectedAccount || !storageContract) return;
 
     try {
-      debugger
+      debugger;
       const [
         userData,
         directIncome,
@@ -546,6 +547,32 @@ const Dashboard = () => {
     else setRefStatus(false);
   }, [user]);
 
+  const fn_ClaimNormalInvestment = async (pkgid) => {
+    setLoadingNormalPkgId(pkgid);
+     try {
+    const res = await logicContract.ClaimStakePayout(0, pkgid, 1);    
+     }
+     catch(err){
+      console.log(err)
+     }
+     finally{
+       setLoadingNormalPkgId(null);
+       fetchInvestmentData()
+     }
+  };
+  const fn_ClaimManagerInvestment = async (pkgid) => {
+    setLoadingManagerPkgId(pkgid)
+    try{
+    const res = await logicContract.ClaimStakePayout(1, pkgid, 1);    
+    }
+    catch(err){
+      console.log(err)
+    }
+    finally{
+       setLoadingManagerPkgId(null)
+       fetchInvestmentData()
+    }
+  };
   return (
     <>
       <div className="row">
@@ -865,9 +892,20 @@ const Dashboard = () => {
                       ).toLocaleString()}
                     </td>
                     <td>
-                      <button type="button" className="btn btn-sm btn-primary">
-                        Claim
-                      </button>
+                      {val.status ? (
+                        <button
+                          type="button"
+                          disabled={loadingNormalPkgId === val.pkgid}
+                          onClick={() => fn_ClaimNormalInvestment(val.pkgid)}
+                          className="btn btn-sm btn-primary"
+                        >
+                          {loadingNormalPkgId === val.pkgid
+                            ? "Processing..."
+                            : "Claim"}
+                        </button>
+                      ) : (
+                        "Claimed"
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -911,9 +949,20 @@ const Dashboard = () => {
                       ).toLocaleString()}
                     </td>
                     <td>
-                      <button type="button" className="btn btn-sm btn-primary">
-                        Claim
-                      </button>
+                      {val.status ? (
+                        <button
+                          type="button"
+                          disabled={loadingManagerPkgId === val.pkgid}
+                          onClick={() => fn_ClaimManagerInvestment(val.pkgid)}
+                          className="btn btn-sm btn-primary"
+                        >
+                          {loadingManagerPkgId === val.pkgid
+                            ? "Processing..."
+                            : "Claim"}
+                        </button>
+                      ) : (
+                        "Claimed"
+                      )}
                     </td>
                   </tr>
                 ))}
