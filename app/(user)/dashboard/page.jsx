@@ -60,8 +60,9 @@ const Dashboard = () => {
   const [managerInvestment, setManagerInvestment] = useState([]);
   const [superManagerInvestment, setSuperManagerInvestment] = useState([]);
   const [diamondInvestment, setDiamondInvestment] = useState([]);
-const [loadingNormalPkgId, setLoadingNormalPkgId] = useState(null);
-const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
+  const [loadingNormalPkgId, setLoadingNormalPkgId] = useState(null);
+  const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
+  const [loadingRound, setLoadingRound] = useState(null);
   const fn_HandleChange = () => {};
   const fn_CopyRefLink = async () => {
     try {
@@ -549,28 +550,42 @@ const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
 
   const fn_ClaimNormalInvestment = async (pkgid) => {
     setLoadingNormalPkgId(pkgid);
-     try {
-    const res = await logicContract.ClaimStakePayout(0, pkgid, 1);    
-     }
-     catch(err){
-      console.log(err)
-     }
-     finally{
-       setLoadingNormalPkgId(null);
-       fetchInvestmentData()
-     }
+    try {
+      const res = await logicContract.ClaimStakePayout(0, pkgid, 1);
+      if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Normal Investment Claim Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingNormalPkgId(null);
+      fetchInvestmentData();
+    }
   };
-  const fn_ClaimManagerInvestment = async (pkgid) => {
-    setLoadingManagerPkgId(pkgid)
-    try{
-    const res = await logicContract.ClaimStakePayout(1, pkgid, 1);    
-    }
-    catch(err){
-      console.log(err)
-    }
-    finally{
-       setLoadingManagerPkgId(null)
-       fetchInvestmentData()
+  const fn_ClaimManagerInvestment = async (pkgid, round) => {
+    setLoadingManagerPkgId(pkgid);
+    setLoadingRound(round);
+    try {
+      const res = await logicContract.ClaimStakePayout(1, pkgid, round + 1);
+       if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Manager Investment Claim Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingManagerPkgId(null);
+      setLoadingRound(null);
+      fetchInvestmentData();
     }
   };
   return (
@@ -952,11 +967,17 @@ const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
                       {val.status ? (
                         <button
                           type="button"
-                          disabled={loadingManagerPkgId === val.pkgid}
-                          onClick={() => fn_ClaimManagerInvestment(val.pkgid)}
+                          disabled={
+                            loadingManagerPkgId === val.pkgid &&
+                            loadingRound === index
+                          }
+                          onClick={() =>
+                            fn_ClaimManagerInvestment(val.pkgid, index)
+                          }
                           className="btn btn-sm btn-primary"
                         >
-                          {loadingManagerPkgId === val.pkgid
+                          {loadingManagerPkgId === val.pkgid &&
+                          loadingRound === index
                             ? "Processing..."
                             : "Claim"}
                         </button>
