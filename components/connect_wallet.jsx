@@ -7,6 +7,7 @@ import logicContractABIF from "../abi/logic_contract.json";
 import historyContractABIF from "../abi/history_contract.json";
 import accessContractABIF from "../abi/role_access_control.json";
 import payoutCalcContractABIF from "../abi/payout_calc_contract.json";
+import royaltyStorageContractABIF from "../abi/royalty_storage_contract.json";
 
 export const connect_wallet = async () => {
   try {
@@ -15,6 +16,7 @@ export const connect_wallet = async () => {
       provider,
       selectedAccount,
       storageContract,
+      royaltyStorageContract,
       logicContract,
       payoutContract,
       teamBussinessContract,
@@ -89,6 +91,11 @@ export const connect_wallet = async () => {
       storageContractABIF,
       signer
     );
+     royaltyStorageContract = new ethers.Contract(
+      process.env.NEXT_PUBLIC_ROYALTY_STORAGE_CONTRACT,
+      royaltyStorageContractABIF,
+      signer
+    );
     logicContract = new ethers.Contract(
       process.env.NEXT_PUBLIC_LOGIC_CONTRACT,
       logicContractABIF,
@@ -131,6 +138,7 @@ export const connect_wallet = async () => {
       provider,
       selectedAccount,
       storageContract,
+      royaltyStorageContract,
       logicContract,
       payoutContract,
       teamBussinessContract,

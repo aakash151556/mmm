@@ -173,7 +173,6 @@ const AccessControl = () => {
     }
   };
 
-
   return (
     <>
       <div className="card">

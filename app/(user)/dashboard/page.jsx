@@ -14,6 +14,7 @@ const Dashboard = () => {
     selectedAccount,
     logicContract,
     storageContract,
+    royaltyStorageContract,
     teamBussinessContract,
     stakeTokenContract,
     stakeUSDTContract,
@@ -63,6 +64,10 @@ const Dashboard = () => {
   const [loadingNormalPkgId, setLoadingNormalPkgId] = useState(null);
   const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
   const [loadingRound, setLoadingRound] = useState(null);
+
+  const [smRoyaltyStatus, setSMRoyaltyStatus] = useState(null);
+  const [dRoyaltyStatus, setDRoyaltyStatus] = useState(null);
+
   const fn_HandleChange = () => {};
   const fn_CopyRefLink = async () => {
     try {
@@ -189,7 +194,7 @@ const Dashboard = () => {
   };
 
   const fetchDashboardData = async () => {
-    if (!selectedAccount || !storageContract) return;
+    if (!selectedAccount || !storageContract || !royaltyStorageContract) return;
 
     try {
       debugger;
@@ -201,6 +206,9 @@ const Dashboard = () => {
         managerIncome,
         superManagerIncome,
         diamondManagerIncome,
+        royaltyIncome,
+        royaltyWithdrawl,
+        royaltyBalance,
         teamCount,
         sponsorCount,
         manager10Count,
@@ -210,6 +218,8 @@ const Dashboard = () => {
         mgrDirect,
         smgrDirect,
         dgrDirect,
+        smRStatus,
+        dRStatus,
       ] = await Promise.all([
         storageContract.GetUser(selectedAccount),
         storageContract.GetAllIncome(selectedAccount, 3),
@@ -218,6 +228,9 @@ const Dashboard = () => {
         storageContract.GetAllIncome(selectedAccount, 6),
         storageContract.GetAllIncome(selectedAccount, 7),
         storageContract.GetAllIncome(selectedAccount, 8),
+        storageContract.GetAllIncome(selectedAccount, 9),
+        storageContract.GetAllIncome(selectedAccount, 10),
+        storageContract.GetAllIncome(selectedAccount, 11),
         storageContract.GetTeamCount(selectedAccount),
         storageContract.GetSponsorsCount(selectedAccount),
         storageContract.GetManagerDirectCount(selectedAccount),
@@ -227,6 +240,8 @@ const Dashboard = () => {
         storageContract.GetRankSponsorsCount(selectedAccount, 1),
         storageContract.GetRankSponsorsCount(selectedAccount, 2),
         storageContract.GetRankSponsorsCount(selectedAccount, 3),
+        royaltyStorageContract.GetRoyaltyAchieverByAddress(2, selectedAccount),
+        royaltyStorageContract.GetRoyaltyAchieverByAddress(3, selectedAccount),
       ]);
 
       setUser(userData);
@@ -236,6 +251,7 @@ const Dashboard = () => {
       setManagerIncome(ethers.formatEther(managerIncome));
       setSuperManagerIncome(ethers.formatEther(superManagerIncome));
       setDiamondManagerIncome(ethers.formatEther(diamondManagerIncome));
+      setRoyaltyIncome(ethers.formatEther(royaltyIncome));
       setTeam(teamCount);
       setDirect(sponsorCount);
       setManager10Direct(manager10Count);
@@ -245,6 +261,8 @@ const Dashboard = () => {
       setManagerDirect(mgrDirect);
       setSuperManagerDirect(smgrDirect);
       setDiamondDirect(dgrDirect);
+      setSMRoyaltyStatus(smRStatus);
+      setDRoyaltyStatus(dRStatus);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     }
@@ -252,7 +270,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const bind = async () => {
-      if (!selectedAccount || !storageContract) return;
+      if (!selectedAccount || !storageContract || !royaltyStorageContract)
+        return;
 
       // const {
       //   _sno,
@@ -534,7 +553,7 @@ const Dashboard = () => {
       await fetchInvestmentData(selectedAccount);
     };
     bind();
-  }, [selectedAccount, storageContract]);
+  }, [selectedAccount, storageContract, royaltyStorageContract]);
 
   useEffect(() => {
     // if (user._rt == 0) setRankName("Member");
@@ -586,6 +605,24 @@ const Dashboard = () => {
       setLoadingManagerPkgId(null);
       setLoadingRound(null);
       fetchInvestmentData();
+    }
+  };
+
+  const fn_ChkSMRoyalty = async () => {
+    try {
+      const res = await logicContract.CheckRoyaltyAchievement(2);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fn_ChkDRoyalty = async () => {
+    try {
+      const res = await logicContract.CheckRoyaltyAchievement(3);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -643,7 +680,37 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-
+      <hr />
+      <div className="row">
+        <div className="col-md-6 text-center">
+          {smRoyaltyStatus ? (
+            "Super Manager Royalty Qualified"
+          ) : (
+            <button
+              type="button"
+              onClick={fn_ChkSMRoyalty}
+              id="btnChkSMRoyalty"
+              className="btn btn-primary"
+            >
+              Refresh Super Manager Qualification
+            </button>
+          )}
+        </div>
+        <div className="col-md-6  text-center">
+          {dRoyaltyStatus ? (
+            "Diamond Royalty Qualified"
+          ) : (
+            <button
+              type="button"
+              onClick={fn_ChkDRoyalty}
+              id="btnChkDRoyalty"
+              className="btn btn-primary"
+            >
+              Refresh Diamond Qualification
+            </button>
+          )}
+        </div>
+      </div>
       <hr />
 
       <div className="my-3  bg-body rounded shadow-sm">
@@ -908,17 +975,29 @@ const Dashboard = () => {
                     </td>
                     <td>
                       {val.status ? (
-                        Math.floor((Date.now() - (parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
-                        <button
-                          type="button"
-                          disabled={loadingNormalPkgId === val.pkgid}
-                          onClick={() => fn_ClaimNormalInvestment(val.pkgid)}
-                          className="btn btn-sm btn-primary"
-                        >
-                          {loadingNormalPkgId === val.pkgid
-                            ? "Processing..."
-                            : "Claim"}
-                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
+                        Math.floor(
+                          (Date.now() - parseInt(val.timestamp) * 1000) /
+                            (1000 * 60 * 60 * 24)
+                        ) >= 30 ? (
+                          <button
+                            type="button"
+                            disabled={loadingNormalPkgId === val.pkgid}
+                            onClick={() => fn_ClaimNormalInvestment(val.pkgid)}
+                            className="btn btn-sm btn-primary"
+                          >
+                            {loadingNormalPkgId === val.pkgid
+                              ? "Processing..."
+                              : "Claim"}
+                          </button>
+                        ) : (
+                          `Wait ${
+                            30 -
+                            Math.floor(
+                              (Date.now() - parseInt(val.timestamp) * 1000) /
+                                (1000 * 60 * 60 * 24)
+                            )
+                          } days`
+                        )
                       ) : (
                         "Claimed"
                       )}
@@ -966,23 +1045,35 @@ const Dashboard = () => {
                     </td>
                     <td>
                       {val.status ? (
-                         Math.floor((Date.now() - (parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
-                        <button
-                          type="button"
-                          disabled={
-                            loadingManagerPkgId === val.pkgid &&
+                        Math.floor(
+                          (Date.now() - parseInt(val.timestamp) * 1000) /
+                            (1000 * 60 * 60 * 24)
+                        ) >= 30 ? (
+                          <button
+                            type="button"
+                            disabled={
+                              loadingManagerPkgId === val.pkgid &&
+                              loadingRound === index
+                            }
+                            onClick={() =>
+                              fn_ClaimManagerInvestment(val.pkgid, index)
+                            }
+                            className="btn btn-sm btn-primary"
+                          >
+                            {loadingManagerPkgId === val.pkgid &&
                             loadingRound === index
-                          }
-                          onClick={() =>
-                            fn_ClaimManagerInvestment(val.pkgid, index)
-                          }
-                          className="btn btn-sm btn-primary"
-                        >
-                          {loadingManagerPkgId === val.pkgid &&
-                          loadingRound === index
-                            ? "Processing..."
-                            : "Claim"}
-                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
+                              ? "Processing..."
+                              : "Claim"}
+                          </button>
+                        ) : (
+                          `Wait ${
+                            30 -
+                            Math.floor(
+                              (Date.now() - parseInt(val.timestamp) * 1000) /
+                                (1000 * 60 * 60 * 24)
+                            )
+                          } days`
+                        )
                       ) : (
                         "Claimed"
                       )}
@@ -1029,7 +1120,7 @@ const Dashboard = () => {
                       ).toLocaleString()}
                     </td>
                     <td>
-                      <button type="button" className="btn btn-sm btn-primary" >
+                      <button type="button" className="btn btn-sm btn-primary">
                         Wait
                       </button>
                     </td>
