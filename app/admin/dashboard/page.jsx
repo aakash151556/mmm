@@ -12,7 +12,9 @@ import Swal from "sweetalert2";
 const Dashboard = () => {
   const {
     logicContract,
+    payoutContract,
     storageContract,
+    royaltyStorageContract,
     teamBussinessContract,
     stakeTokenContract,
     stakeUSDTContract,
@@ -64,6 +66,9 @@ const Dashboard = () => {
   const [loadingNormalPkgId, setLoadingNormalPkgId] = useState(null);
   const [loadingManagerPkgId, setLoadingManagerPkgId] = useState(null);
   const [loadingRound, setLoadingRound] = useState(null);
+
+  const [smRoyaltyStatus, setSMRoyaltyStatus] = useState(null);
+  const [dRoyaltyStatus, setDRoyaltyStatus] = useState(null);
   useEffect(() => {
     setSelected(localStorage.getItem("selectedAccount"));
   }, []);
@@ -191,7 +196,8 @@ const Dashboard = () => {
   };
 
   const fetchDashboardData = async () => {
-    if (!selected || !storageContract) return;
+    console.log(royaltyStorageContract);
+    if (!selected || !storageContract || !royaltyStorageContract) return;
 
     try {
       const [
@@ -202,6 +208,9 @@ const Dashboard = () => {
         managerIncome,
         superManagerIncome,
         diamondManagerIncome,
+        royaltyIncome,
+        royaltyWithdrawl,
+        royaltyBalance,
         teamCount,
         sponsorCount,
         manager10Count,
@@ -211,6 +220,8 @@ const Dashboard = () => {
         mgrDirect,
         smgrDirect,
         dgrDirect,
+        smRStatus,
+        dRStatus,
       ] = await Promise.all([
         storageContract.GetUser(selected),
         storageContract.GetAllIncome(selected, 3),
@@ -219,6 +230,9 @@ const Dashboard = () => {
         storageContract.GetAllIncome(selected, 6),
         storageContract.GetAllIncome(selected, 7),
         storageContract.GetAllIncome(selected, 8),
+        storageContract.GetAllIncome(selected, 9),
+        storageContract.GetAllIncome(selected, 10),
+        storageContract.GetAllIncome(selected, 11),
         storageContract.GetTeamCount(selected),
         storageContract.GetSponsorsCount(selected),
         storageContract.GetManagerDirectCount(selected),
@@ -228,6 +242,8 @@ const Dashboard = () => {
         storageContract.GetRankSponsorsCount(selected, 1),
         storageContract.GetRankSponsorsCount(selected, 2),
         storageContract.GetRankSponsorsCount(selected, 3),
+        royaltyStorageContract.GetRoyaltyAchieverByAddress(2, selected),
+        royaltyStorageContract.GetRoyaltyAchieverByAddress(3, selected),
       ]);
 
       setUser(userData);
@@ -237,6 +253,7 @@ const Dashboard = () => {
       setManagerIncome(ethers.formatEther(managerIncome));
       setSuperManagerIncome(ethers.formatEther(superManagerIncome));
       setDiamondManagerIncome(ethers.formatEther(diamondManagerIncome));
+      setRoyaltyIncome(ethers.formatEther(royaltyIncome));
       setTeam(teamCount);
       setDirect(sponsorCount);
       setManager10Direct(manager10Count);
@@ -246,6 +263,8 @@ const Dashboard = () => {
       setManagerDirect(mgrDirect);
       setSuperManagerDirect(smgrDirect);
       setDiamondDirect(dgrDirect);
+      setSMRoyaltyStatus(smRStatus);
+      setDRoyaltyStatus(dRStatus);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     }
@@ -255,299 +274,62 @@ const Dashboard = () => {
     const bind = async () => {
       if (!selected || !storageContract) return;
 
-      // const {
-      //   _sno,
-      //   _userAddress,
-      //   _sponsorAddress,
-      //   _sp,
-      //   _actts,
-      //   _entts,
-      //   _status,
-      //   _entryby,
-      //   _rt,
-      // } = await storageContract?.GetUser(selected);
-
-      // setUser({
-      //   _sno,
-      //   _userAddress,
-      //   _sponsorAddress,
-      //   _sp,
-      //   _actts,
-      //   _entts,
-      //   _status,
-      //   _entryby,
-      //   _rt,
-      // });
-
-      // const di = await storageContract?.GetAllIncome(selected, 3);
-      // setDirectIncome(ethers.formatEther(di));
-
-      // const li = await storageContract?.GetAllIncome(selected, 4);
-      // setLevelIncome(ethers.formatEther(li));
-
-      // const ni = await storageContract?.GetAllIncome(selected, 5);
-      // setNormalIncome(ethers.formatEther(ni));
-
-      // const mi = await storageContract?.GetAllIncome(selected, 6);
-      // setManagerIncome(ethers.formatEther(mi));
-
-      // const smi = await storageContract?.GetAllIncome(selected, 7);
-      // setSuperManagerIncome(ethers.formatEther(smi));
-
-      // const dmi = await storageContract?.GetAllIncome(selected, 8);
-      // setDiamondManagerIncome(ethers.formatEther(dmi));
-
-      // const t = await storageContract?.GetTeamCount(selected);
-      // setTeam(t);
-
-      // const s = await storageContract?.GetSponsorsCount(selected);
-      // setDirect(s);
-
-      // const mdt = await storageContract?.GetManagerDirectCount(selected);
-      // setManager10Direct(mdt);
-
-      // const mgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selected,
-      //   1
-      // );
-      // setManagerTeam(mgrt);
-
-      // const smgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selected,
-      //   2
-      // );
-      // setSuperManagerTeam(smgrt);
-
-      // const dgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selected,
-      //   3
-      // );
-      // setDiamondTeam(dgrt);
-
-      // const md = await storageContract?.GetRankSponsorsCount(
-      //   selected,
-      //   1
-      // );
-      // setManagerDirect(md);
-
-      // const sd = await storageContract?.GetRankSponsorsCount(
-      //   selected,
-      //   2
-      // );
-      // setSuperManagerDirect(sd);
-
-      // const dd = await storageContract?.GetRankSponsorsCount(
-      //   selected,
-      //   3
-      // );
-      // setDiamondDirect(dd);
-      //self bussiness
-
-      // let obj = {
-      //   normal: { self: 0, direct: 0, team: 0 },
-      //   manager: { self: 0, direct: 0, team: 0 },
-      //   s_manager: { self: 0, direct: 0, team: 0 },
-      //   diamond: { self: 0, direct: 0, team: 0 },
-      // };
-
-      // let i = 0;
-      // let p = 3;
-      // while (i <= p) {
-      //   const member_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selected, i, 0, 0);
-      //   const manager_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selected, i, 1, 0);
-      //   const super_manager_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selected, i, 2, 0);
-      //   const diamond_direct_bussiness =
-      //     await storageContract?.GetBussinessTotal(selected, i, 3, 0);
-
-      //   const member_team_bussiness = await storageContract?.GetBussinessTotal(
-      //     selected,
-      //     i,
-      //     0,
-      //     1
-      //   );
-      //   const manager_team_bussiness = await storageContract?.GetBussinessTotal(
-      //     selected,
-      //     i,
-      //     1,
-      //     1
-      //   );
-      //   const super_manager_team_bussiness =
-      //     await storageContract?.GetBussinessTotal(selected, i, 2, 1);
-      //   const diamond_team_bussiness = await storageContract?.GetBussinessTotal(
-      //     selected,
-      //     i,
-      //     3,
-      //     1
-      //   );
-
-      //   if (i == 0) {
-      //     obj.normal.direct =
-      //       Number(obj.normal.direct) +
-      //       Number(ethers.formatEther(member_direct_bussiness));
-
-      //     obj.normal.team =
-      //       Number(obj.normal.team) +
-      //       Number(ethers.formatEther(member_team_bussiness));
-      //   } else if (i == 1) {
-      //     obj.manager.direct =
-      //       Number(obj.manager.direct) +
-      //       Number(ethers.formatEther(manager_direct_bussiness));
-      //     obj.manager.team =
-      //       Number(obj.manager.team) +
-      //       Number(ethers.formatEther(manager_team_bussiness));
-      //   } else if (i == 2) {
-      //     obj.s_manager.direct =
-      //       Number(obj.s_manager.direct) +
-      //       Number(ethers.formatEther(super_manager_direct_bussiness));
-      //     obj.s_manager.team =
-      //       Number(obj.s_manager.team) +
-      //       Number(ethers.formatEther(super_manager_team_bussiness));
-      //   } else if (i == 3) {
-      //     obj.diamond.direct =
-      //       Number(obj.diamond.direct) +
-      //       Number(ethers.formatEther(diamond_direct_bussiness));
-      //     obj.diamond.team =
-      //       Number(obj.diamond.team) +
-      //       Number(ethers.formatEther(diamond_team_bussiness));
-      //   }
-
-      //   const lasttopup = await storageContract?.GetLastTopup(
-      //     selected,
-      //     i
-      //   );
-      //   const kp = parseInt(lasttopup);
-      //   let k = 0;
-      //   while (k <= kp) {
-      //     const {
-      //       userAddress,
-      //       pkgid,
-      //       usdt,
-      //       price,
-      //       token,
-      //       total,
-      //       upgrade,
-      //       income,
-      //       round,
-      //       status,
-      //       timestamp,
-      //     } = await storageContract?.GetTopupDetail(selected, i, k, 1);
-      //     console.log(
-      //       userAddress,
-      //       pkgid,
-      //       usdt,
-      //       price,
-      //       token,
-      //       total,
-      //       upgrade,
-      //       income,
-      //       round,
-      //       status,
-      //       timestamp
-      //     );
-      //     if (i == 0 && usdt > 0) {
-      //       obj.normal.self =
-      //         Number(obj.normal.self) + Number(ethers.formatEther(usdt));
-      //       setNormalInvestment([]);
-
-      //       setNormalInvestment((prev) => [
-      //         ...prev,
-      //         {
-      //           pkgid,
-      //           usdt,
-      //           price,
-      //           token,
-      //           total,
-      //           upgrade,
-      //           income,
-      //           round,
-      //           status,
-      //           timestamp,
-      //         },
-      //       ]);
-      //     } else if (i == 1 && usdt > 0) {
-      //       obj.manager.self =
-      //         Number(obj.manager.self) + Number(ethers.formatEther(usdt));
-      //       setManagerInvestment([]);
-      //       setManagerInvestment((prev) => [
-      //         ...prev,
-      //         {
-      //           pkgid,
-      //           usdt,
-      //           price,
-      //           token,
-      //           total,
-      //           upgrade,
-      //           income,
-      //           round,
-      //           status,
-      //           timestamp,
-      //         },
-      //       ]);
-      //     } else if (i == 2 && token > 0) {
-      //       obj.s_manager.self =
-      //         Number(obj.s_manager.self) + Number(ethers.formatEther(usdt));
-      //       setSuperManagerInvestment([]);
-      //       setSuperManagerInvestment((prev) => [
-      //         ...prev,
-      //         {
-      //           pkgid,
-      //           usdt,
-      //           price,
-      //           token,
-      //           total,
-      //           upgrade,
-      //           income,
-      //           round,
-      //           status,
-      //           timestamp,
-      //         },
-      //       ]);
-      //     } else if (i == 3 && token > 0) {
-      //       obj.diamond.self =
-      //         Number(obj.diamond.self) + Number(ethers.formatEther(usdt));
-      //       setDiamondInvestment([]);
-      //       setDiamondInvestment((prev) => [
-      //         ...prev,
-      //         {
-      //           pkgid,
-      //           usdt,
-      //           price,
-      //           token,
-      //           total,
-      //           upgrade,
-      //           income,
-      //           round,
-      //           status,
-      //           timestamp,
-      //         },
-      //       ]);
-      //     }
-      //     k++;
-      //   }
-      //   i++;
-      // }
-
-      // setBussiness(obj);
       await fetchDashboardData();
       await fetchInvestmentData(selected);
     };
     bind();
-  }, [selected, storageContract]);
+  }, [selected, storageContract, royaltyStorageContract]);
 
   useEffect(() => {
-    // if (user._rt == 0) setRankName("Member");
-    // else if (user._rt == 1) setRankName("Manager");
-    // else if (user._rt == 2) setRankName("Super Manager");
-    // else if (user._rt == 3) setRankName("Diamond");
-
     const rankNames = ["Member", "Manager", "Super Manager", "Diamond"];
     setRankName(rankNames[user._rt] || "Unknown");
     if (user._rt != 0) setRefStatus(true);
     else setRefStatus(false);
   }, [user]);
+
+  const fn_ChkSMRoyalty = async () => {
+    try {
+      const res = await payoutContract.OwnerCheckRoyaltyAchievement(
+        selected,
+        2
+      );
+
+      if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          window.location.reload();
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fn_ChkDRoyalty = async () => {
+    try {
+      const res = await payoutContract.OwnerCheckRoyaltyAchievement(
+        selected,
+        3
+      );
+      
+      if (res){
+         Swal.fire({
+          title: "Success!",
+          text: "Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          window.location.reload();
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -605,6 +387,42 @@ const Dashboard = () => {
         </div>
       </div>
 
+      <hr />
+      <div className="row">
+        <div className="col-md-12 text-center">
+          <div className="text-success text-uppercase fw-bold bg-light p-2">
+            {user._rt == 3 ? (
+              dRoyaltyStatus ? (
+                "Diamond Royalty Qualified"
+              ) : (
+                <button
+                  type="button"
+                  onClick={fn_ChkDRoyalty}
+                  id="btnChkDRoyalty"
+                  className="btn btn-primary"
+                >
+                  Refresh Diamond Qualification
+                </button>
+              )
+            ) : user._rt == 2 ? (
+              smRoyaltyStatus ? (
+                "Super Manager Royalty Qualified"
+              ) : (
+                <button
+                  type="button"
+                  onClick={fn_ChkSMRoyalty}
+                  id="btnChkSMRoyalty"
+                  className="btn btn-primary"
+                >
+                  Refresh Super Manager Qualification
+                </button>
+              )
+            ) : (
+              "Not Eligible For Royalty Income"
+            )}
+          </div>
+        </div>
+      </div>
       <hr />
 
       <div className="my-3  bg-body rounded shadow-sm">
@@ -867,19 +685,29 @@ const Dashboard = () => {
                         )
                       ).toLocaleString()}
                     </td>
-                   <td>
+                    <td>
                       {val.status ? (
-                        
-                         Math.floor((Date.now() -(parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
-                        <button
-                          type="button"
-                        
-                          className="btn btn-sm btn-primary"
-                        >
-                          {loadingNormalPkgId === val.pkgid
-                            ? "Processing..."
-                            : "Claim"}
-                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
+                        Math.floor(
+                          (Date.now() - parseInt(val.timestamp) * 1000) /
+                            (1000 * 60 * 60 * 24)
+                        ) >= 30 ? (
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-primary"
+                          >
+                            {loadingNormalPkgId === val.pkgid
+                              ? "Processing..."
+                              : "Claim"}
+                          </button>
+                        ) : (
+                          `Wait ${
+                            30 -
+                            Math.floor(
+                              (Date.now() - parseInt(val.timestamp) * 1000) /
+                                (1000 * 60 * 60 * 24)
+                            )
+                          } days`
+                        )
                       ) : (
                         "Claimed"
                       )}
@@ -925,19 +753,30 @@ const Dashboard = () => {
                         )
                       ).toLocaleString()}
                     </td>
-                     <td>
+                    <td>
                       {val.status ? (
-                        
-                          Math.floor((Date.now() -(parseInt(val.timestamp)*1000)) / (1000 * 60 * 60 * 24))>=30?
-                        <button
-                          type="button"                          
-                          className="btn btn-sm btn-primary"
-                        >
-                          {loadingManagerPkgId === val.pkgid &&
-                          loadingRound === index
-                            ? "Processing..."
-                            : "Claim"}
-                        </button>:`Wait ${30 - Math.floor((Date.now() - parseInt(val.timestamp) * 1000) / (1000 * 60 * 60 * 24))} days`
+                        Math.floor(
+                          (Date.now() - parseInt(val.timestamp) * 1000) /
+                            (1000 * 60 * 60 * 24)
+                        ) >= 30 ? (
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-primary"
+                          >
+                            {loadingManagerPkgId === val.pkgid &&
+                            loadingRound === index
+                              ? "Processing..."
+                              : "Claim"}
+                          </button>
+                        ) : (
+                          `Wait ${
+                            30 -
+                            Math.floor(
+                              (Date.now() - parseInt(val.timestamp) * 1000) /
+                                (1000 * 60 * 60 * 24)
+                            )
+                          } days`
+                        )
                       ) : (
                         "Claimed"
                       )}

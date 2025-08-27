@@ -3,22 +3,19 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "storageContract",
+				"name": "_account",
 				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "teamContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "historyContract",
-				"type": "address"
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "_rt",
+				"type": "uint8"
 			}
 		],
+		"name": "CheckRoyaltyAchievement",
+		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -42,6 +39,24 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_account",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "_rt",
+				"type": "uint8"
+			}
+		],
+		"name": "OwnerCheckRoyaltyAchievement",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "_userAddress",
 				"type": "address"
 			},
@@ -52,6 +67,24 @@
 			}
 		],
 		"name": "ReferralIncomeCalc",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_bv",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "_rt",
+				"type": "uint8"
+			}
+		],
+		"name": "RoyaltyPayoutCalc",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -135,5 +168,31 @@
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "royaltyStorageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "teamContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	}
 ]

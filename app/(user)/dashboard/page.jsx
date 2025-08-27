@@ -273,94 +273,6 @@ const Dashboard = () => {
       if (!selectedAccount || !storageContract || !royaltyStorageContract)
         return;
 
-      // const {
-      //   _sno,
-      //   _userAddress,
-      //   _sponsorAddress,
-      //   _sp,
-      //   _actts,
-      //   _entts,
-      //   _status,
-      //   _entryby,
-      //   _rt,
-      // } = await storageContract?.GetUser(selectedAccount);
-
-      // setUser({
-      //   _sno,
-      //   _userAddress,
-      //   _sponsorAddress,
-      //   _sp,
-      //   _actts,
-      //   _entts,
-      //   _status,
-      //   _entryby,
-      //   _rt,
-      // });
-
-      // const di = await storageContract?.GetAllIncome(selectedAccount, 3);
-      // setDirectIncome(ethers.formatEther(di));
-
-      // const li = await storageContract?.GetAllIncome(selectedAccount, 4);
-      // setLevelIncome(ethers.formatEther(li));
-
-      // const ni = await storageContract?.GetAllIncome(selectedAccount, 5);
-      // setNormalIncome(ethers.formatEther(ni));
-
-      // const mi = await storageContract?.GetAllIncome(selectedAccount, 6);
-      // setManagerIncome(ethers.formatEther(mi));
-
-      // const smi = await storageContract?.GetAllIncome(selectedAccount, 7);
-      // setSuperManagerIncome(ethers.formatEther(smi));
-
-      // const dmi = await storageContract?.GetAllIncome(selectedAccount, 8);
-      // setDiamondManagerIncome(ethers.formatEther(dmi));
-
-      // const t = await storageContract?.GetTeamCount(selectedAccount);
-      // setTeam(t);
-
-      // const s = await storageContract?.GetSponsorsCount(selectedAccount);
-      // setDirect(s);
-
-      // const mdt = await storageContract?.GetManagerDirectCount(selectedAccount);
-      // setManager10Direct(mdt);
-
-      // const mgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selectedAccount,
-      //   1
-      // );
-      // setManagerTeam(mgrt);
-
-      // const smgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selectedAccount,
-      //   2
-      // );
-      // setSuperManagerTeam(smgrt);
-
-      // const dgrt = await storageContract?.GetRankWiseTeamCount(
-      //   selectedAccount,
-      //   3
-      // );
-      // setDiamondTeam(dgrt);
-
-      // const md = await storageContract?.GetRankSponsorsCount(
-      //   selectedAccount,
-      //   1
-      // );
-      // setManagerDirect(md);
-
-      // const sd = await storageContract?.GetRankSponsorsCount(
-      //   selectedAccount,
-      //   2
-      // );
-      // setSuperManagerDirect(sd);
-
-      // const dd = await storageContract?.GetRankSponsorsCount(
-      //   selectedAccount,
-      //   3
-      // );
-      // setDiamondDirect(dd);
-      //self bussiness
-
       // let obj = {
       //   normal: { self: 0, direct: 0, team: 0 },
       //   manager: { self: 0, direct: 0, team: 0 },
@@ -611,7 +523,16 @@ const Dashboard = () => {
   const fn_ChkSMRoyalty = async () => {
     try {
       const res = await logicContract.CheckRoyaltyAchievement(2);
-      console.log(res);
+      if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          window.location.reload();
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -620,7 +541,16 @@ const Dashboard = () => {
   const fn_ChkDRoyalty = async () => {
     try {
       const res = await logicContract.CheckRoyaltyAchievement(3);
-      console.log(res);
+      if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          window.location.reload();
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -681,37 +611,42 @@ const Dashboard = () => {
         </div>
       </div>
       <hr />
-      {/* <div className="row" >
-        <div className="col-md-6 text-center">
-          {smRoyaltyStatus ? (
-            "Super Manager Royalty Qualified"
-          ) : (
-            <button
-              type="button"
-              onClick={fn_ChkSMRoyalty}
-              id="btnChkSMRoyalty"
-              className="btn btn-primary"
-            >
-              Refresh Super Manager Qualification
-            </button>
-          )}
-        </div>
-        <div className="col-md-6  text-center">
-          {dRoyaltyStatus ? (
-            "Diamond Royalty Qualified"
-          ) : (
-            <button
-              type="button"
-              onClick={fn_ChkDRoyalty}
-              id="btnChkDRoyalty"
-              className="btn btn-primary"
-            >
-              Refresh Diamond Qualification
-            </button>
-          )}
+      <div className="row">
+        <div className="col-md-12 text-center">
+          <div className="text-success text-uppercase fw-bold bg-light p-2">
+            {user._rt == 3 ? (
+              dRoyaltyStatus ? (
+                "Diamond Royalty Qualified"
+              ) : (
+                <button
+                  type="button"
+                  onClick={fn_ChkDRoyalty}
+                  id="btnChkDRoyalty"
+                  className="btn btn-primary"
+                >
+                  Refresh Diamond Qualification
+                </button>
+              )
+            ) : user._rt == 2 ? (
+              smRoyaltyStatus ? (
+                "Super Manager Royalty Qualified"
+              ) : (
+                <button
+                  type="button"
+                  onClick={fn_ChkSMRoyalty}
+                  id="btnChkSMRoyalty"
+                  className="btn btn-primary"
+                >
+                  Refresh Super Manager Qualification
+                </button>
+              )
+            ) : (
+              "Not Eligible For Royalty Income"
+            )}
+          </div>
         </div>
       </div>
-      <hr /> */}
+      <hr />
 
       <div className="my-3  bg-body rounded shadow-sm">
         <div className="bhas">
