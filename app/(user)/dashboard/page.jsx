@@ -681,7 +681,7 @@ const Dashboard = () => {
         </div>
       </div>
       <hr />
-      <div className="row">
+      {/* <div className="row" >
         <div className="col-md-6 text-center">
           {smRoyaltyStatus ? (
             "Super Manager Royalty Qualified"
@@ -711,7 +711,7 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      <hr />
+      <hr /> */}
 
       <div className="my-3  bg-body rounded shadow-sm">
         <div className="bhas">
