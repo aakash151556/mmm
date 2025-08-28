@@ -148,9 +148,9 @@ const ReTopup = () => {
           });
         } else {
           Swal.fire({
-            title: "Error!",
-            text: reciept,
-            icon: "error",
+            title: "info!",
+            text: "try again!",
+            icon: "info",
             confirmButtonText: "OK",
           });
           setLoading(false);

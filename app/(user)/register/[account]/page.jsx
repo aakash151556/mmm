@@ -165,9 +165,9 @@ const Register = ({ params }) => {
       console.log(err)
       setLoading(false);
       Swal.fire({
-        title: "Error!",
+        title: "Info!",
         text: "try again",
-        icon: "error",
+        icon: "info",
         confirmButtonText: "OK",
       }).then((result) => {
         if (result.isConfirmed) {
