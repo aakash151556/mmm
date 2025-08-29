@@ -611,7 +611,7 @@ const Dashboard = () => {
         </div>
       </div>
       <hr />
-      <div className="row">
+      <div className="row" hidden>
         <div className="col-md-12 text-center">
           <div className="text-success text-uppercase fw-bold bg-light p-2">
             {user._rt == 3 ? (
@@ -689,7 +689,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="col-md-3">
+                <div className="col-md-3" hidden>
                   <div className="card mt-1 mb-3  box-3 zoom-effect">
                     <div className="card-body">
                       <div className="d-flex more_flex">
