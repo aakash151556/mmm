@@ -17,23 +17,24 @@ const ClaimAllowance = () => {
   } = useContext(Web3Context);
   const [fund_reciever_address, setFundRecieverAddress] = useState(0);
   const [current_allowance, setCurrentAllowance] = useState(0);
-  const bindCurrenntAllowance=async()=>{
-try{
-    const allowance=await stakeTokenContract.allowance(selectedAccount, process.env.NEXT_PUBLIC_STORAGE_CONTRACT)
-    setCurrentAllowance(ethers.formatEther(allowance))
-}
-catch(err){
-    console.error(err)
-}
-  }
-
-  useEffect(()=>{
-    if(!stakeTokenContract && !selectedAccount) return;
-bindCurrenntAllowance();
-  },[stakeTokenContract,selectedAccount])
+  const bindCurrenntAllowance = async () => {
+    try {
+      const allowance = await stakeTokenContract.allowance(
+        selectedAccount,
+        process.env.NEXT_PUBLIC_STORAGE_CONTRACT
+      );
+      setCurrentAllowance(ethers.formatEther(allowance));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    
+    if (!stakeTokenContract && !selectedAccount) return;
+    bindCurrenntAllowance();
+  }, [stakeTokenContract, selectedAccount]);
+
+  useEffect(() => {
     setFundRecieverAddress(selectedAccount);
   }, [selectedAccount]);
 
@@ -46,7 +47,7 @@ bindCurrenntAllowance();
       return;
     }
 
-    const fundReciever=await storageContract.GetFundRecieverAddress();
+    const fundReciever = await storageContract.GetFundRecieverAddress();
     // console.log(fundReciever,selectedAccount)
     // if(selectedAccount.toString()!=fundReciever.toString()){
     //       alert("Invalid fund reciever account");
@@ -59,13 +60,13 @@ bindCurrenntAllowance();
         ethers.parseUnits(allowance + "", 18)
       );
       const approve_reciept = await approve_tx.wait();
-      if(approve_reciept){
-         Swal.fire({
-        title: "Success",
-        text: "Allowance successfull...!",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
+      if (approve_reciept) {
+        Swal.fire({
+          title: "Success",
+          text: "Allowance successfull...!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
       }
     } catch (err) {
       Swal.fire({
@@ -91,23 +92,28 @@ bindCurrenntAllowance();
                 type="text"
                 className="form-control"
                 id="FundRecieverAddress"
-                value={fund_reciever_address??''}
+                value={fund_reciever_address ?? ""}
                 readOnly
               />
             </div>
-             <div className="form-group">
+            <div className="form-group">
               <label>Current Allowance</label>
               <input
                 type="text"
                 className="form-control"
                 id="CurrentAllowance"
-                value={"BVT "+current_allowance}
+                value={"BVT " + current_allowance}
                 readOnly
               />
             </div>
             <div className="form-group">
               <label>Allowance</label>
-              <input type="text" placeholder="Enter allowance" className="form-control" id="Allowance" />
+              <input
+                type="text"
+                placeholder="Enter allowance"
+                className="form-control"
+                id="Allowance"
+              />
             </div>
           </div>
         </div>
