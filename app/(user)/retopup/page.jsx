@@ -200,7 +200,7 @@ const ReTopup = () => {
                   name="package"
                 >
                   <option value="">Select Package</option>
-                  <option value="0">54 USDT Normal</option>
+                  {/* <option value="0">54 USDT Normal</option> */}
                   <option value="1">215 USDT Manager</option>
                   <option value="2">5000 BVT Super Manager</option>
                   <option value="3">25000 BVT Diamond</option>
