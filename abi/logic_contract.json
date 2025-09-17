@@ -229,7 +229,7 @@
 				"type": "bool"
 			}
 		],
-		"name": "UserBlock",
+		"name": "UserBlockUnblock",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

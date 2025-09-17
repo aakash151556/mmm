@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-const BlockUser = () => {
+const UnblockUser = () => {
   const {
     selectedAccount,
     logicContract,
@@ -19,18 +19,14 @@ const BlockUser = () => {
   const [fund_reciever_address, setFundRecieverAddress] = useState();
 
   const fn_submit = async () => {
-    if (fund_reciever_address && logicContract) {
+    if (fund_reciever_address) {
       try {
-
-        const trx = await logicContract.UserBlockUnblock(
-          fund_reciever_address,
-          false
-        );
+        const trx = await logicContract.UserBlockUnblock(fund_reciever_address, true);
         const res = await trx.wait();
         if (res) {
           Swal.fire({
             title: "Success",
-            text: "User blocked successfull...!",
+            text: "User unblocked successfull...!",
             icon: "success",
             confirmButtonText: "OK",
           });
@@ -50,7 +46,7 @@ const BlockUser = () => {
     <>
       <div className="card">
         <div className="card-header">
-          <h2 className="card-title">Block User</h2>
+          <h2 className="card-title">Unblock User</h2>
         </div>
         <div className="card-body">
           <div className="row">
@@ -77,4 +73,4 @@ const BlockUser = () => {
   );
 };
 
-export default BlockUser;
+export default UnblockUser;

@@ -611,7 +611,7 @@ const Dashboard = () => {
         </div>
       </div>
       <hr />
-      <div className="row" hidden>
+      <div className="row">
         <div className="col-md-12 text-center">
           <div className="text-success text-uppercase fw-bold bg-light p-2">
             {user._rt == 3 ? (

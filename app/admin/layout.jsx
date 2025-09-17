@@ -268,6 +268,9 @@ export default function RootLayout({ children }) {
                  <Link className="nav-link" href="/admin/block_user">
                 Block User
               </Link>
+                    <Link className="nav-link" href="/admin/unblock_user">
+                Unblock User
+              </Link>
               <Link className="nav-link" href="/admin/claim_allowance">
                 Set Claim Allowance
               </Link>
