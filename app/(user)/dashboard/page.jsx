@@ -624,7 +624,7 @@ const Dashboard = () => {
                   id="btnChkDRoyalty"
                   className="btn btn-primary"
                 >
-                  Refresh Diamond Qualification
+                  Refresh Diamond Royalty Qualification
                 </button>
               )
             ) : user._rt == 2 ? (
@@ -637,7 +637,7 @@ const Dashboard = () => {
                   id="btnChkSMRoyalty"
                   className="btn btn-primary"
                 >
-                  Refresh Super Manager Qualification
+                  Refresh Super Manager Royalty Qualification
                 </button>
               )
             ) : (
