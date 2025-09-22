@@ -2,6 +2,32 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "teamContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "payoutContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "enum CustomDataTypesContract.RankType",
 				"name": "_rt",
 				"type": "uint8"
@@ -40,6 +66,25 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "usdt",
+				"type": "uint256"
+			}
+		],
+		"name": "ClaimRoyaltyByAdmin",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "enum CustomDataTypesContract.PackageType",
 				"name": "pt",
 				"type": "uint8"
@@ -56,6 +101,40 @@
 			}
 		],
 		"name": "ClaimStakePayout",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pkgid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "round",
+				"type": "uint256"
+			}
+		],
+		"name": "ClaimStakePayoutByOwner",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -105,6 +184,19 @@
 	{
 		"inputs": [
 			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "ReTopup",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "_account",
 				"type": "address"
@@ -121,19 +213,6 @@
 			}
 		],
 		"name": "RegisterByAdmin",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "enum CustomDataTypesContract.PackageType",
-				"name": "pt",
-				"type": "uint8"
-			}
-		],
-		"name": "ReTopup",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -194,32 +273,6 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "storageContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "historyContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "teamContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "payoutContract",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "account",
 				"type": "address"
 			},
@@ -261,6 +314,30 @@
 			}
 		],
 		"name": "WithdrawUSDT",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "usdt",
+				"type": "uint256"
+			}
+		],
+		"name": "WithdrawUSDTByOwner",
 		"outputs": [
 			{
 				"internalType": "bool",

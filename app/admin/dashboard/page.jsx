@@ -286,7 +286,46 @@ const Dashboard = () => {
     if (user._rt != 0) setRefStatus(true);
     else setRefStatus(false);
   }, [user]);
-
+  const fn_ClaimNormalInvestment = async (pkgid) => {
+    setLoadingNormalPkgId(pkgid);
+    try {
+      const res = await logicContract.ClaimStakePayoutByOwner(selected,0, pkgid, 1);
+      if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Normal Investment Claim Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingNormalPkgId(null);
+      fetchInvestmentData();
+    }
+  };
+  const fn_ClaimManagerInvestment = async (pkgid, round) => {
+    setLoadingManagerPkgId(pkgid);
+    setLoadingRound(round);
+    try {
+      const res = await logicContract.ClaimStakePayoutByOwner(selected,1, pkgid, round + 1);
+      if (res) {
+        Swal.fire({
+          title: "Success!",
+          text: "Manager Investment Claim Successfull..!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingManagerPkgId(null);
+      setLoadingRound(null);
+      fetchInvestmentData();
+    }
+  };
   const fn_ChkSMRoyalty = async () => {
     try {
       const res = await payoutContract.OwnerCheckRoyaltyAchievement(
@@ -667,53 +706,55 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {normalInvestment &&
-                normalInvestment.map((val, index) => (
-                  <tr key={index}>
-                    <td> ${ethers.formatEther(val.usdt)}</td>
-                    <td>
-                      {new Date(
-                        parseInt(val.timestamp) * 1000
-                      ).toLocaleString()}
-                    </td>
-                    <td> ${ethers.formatEther(val.income)}</td>
-                    <td>
-                      {new Date(
-                        new Date(parseInt(val.timestamp) * 1000).setMonth(
-                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
-                            1
-                        )
-                      ).toLocaleString()}
-                    </td>
-                    <td>
-                      {val.status ? (
-                        Math.floor(
-                          (Date.now() - parseInt(val.timestamp) * 1000) /
-                            (1000 * 60 * 60 * 24)
-                        ) >= 30 ? (
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-primary"
-                          >
-                            {loadingNormalPkgId === val.pkgid
-                              ? "Processing..."
-                              : "Claim"}
-                          </button>
-                        ) : (
-                          `Wait ${
-                            30 -
-                            Math.floor(
-                              (Date.now() - parseInt(val.timestamp) * 1000) /
-                                (1000 * 60 * 60 * 24)
-                            )
-                          } days`
-                        )
-                      ) : (
-                        "Claimed"
-                      )}
-                    </td>
-                  </tr>
-                ))}
+               {normalInvestment &&
+                              normalInvestment.map((val, index) => (
+                                <tr key={index}>
+                                  <td> ${ethers.formatEther(val.usdt)}</td>
+                                  <td>
+                                    {new Date(
+                                      parseInt(val.timestamp) * 1000
+                                    ).toLocaleString()}
+                                  </td>
+                                  <td> ${ethers.formatEther(val.income)}</td>
+                                  <td>
+                                    {new Date(
+                                      new Date(parseInt(val.timestamp) * 1000).setMonth(
+                                        new Date(parseInt(val.timestamp) * 1000).getMonth() +
+                                          1
+                                      )
+                                    ).toLocaleString()}
+                                  </td>
+                                  <td>
+                                    {val.status ? (
+                                      Math.floor(
+                                        (Date.now() - parseInt(val.timestamp) * 1000) /
+                                          (1000 * 60 * 60 * 24)
+                                      ) >= 30 ? (
+                                        <button
+                                          type="button"
+                                          disabled={loadingNormalPkgId === val.pkgid}
+                                          onClick={() => fn_ClaimNormalInvestment(val.pkgid)}
+                                          className="btn btn-sm btn-primary"
+                                        >
+                                          {loadingNormalPkgId === val.pkgid
+                                            ? "Processing..."
+                                            : "Claim"}
+                                        </button>
+                                      ) : (
+                                        `Wait ${
+                                          30 -
+                                          Math.floor(
+                                            (Date.now() - parseInt(val.timestamp) * 1000) /
+                                              (1000 * 60 * 60 * 24)
+                                          )
+                                        } days`
+                                      )
+                                    ) : (
+                                      "Claimed"
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
             </tbody>
           </table>
         </div>
@@ -736,53 +777,60 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {managerInvestment &&
-                managerInvestment.map((val, index) => (
-                  <tr key={index}>
-                    <td> ${ethers.formatEther(val.usdt)}</td>
-                    <td>
-                      {new Date(
-                        parseInt(val.timestamp) * 1000
-                      ).toLocaleString()}
-                    </td>
-                    <td> ${ethers.formatEther(val.income)}</td>
-                    <td>
-                      {new Date(
-                        new Date(parseInt(val.timestamp) * 1000).setMonth(
-                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
-                            1
-                        )
-                      ).toLocaleString()}
-                    </td>
-                    <td>
-                      {val.status ? (
-                        Math.floor(
-                          (Date.now() - parseInt(val.timestamp) * 1000) /
-                            (1000 * 60 * 60 * 24)
-                        ) >= 30 ? (
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-primary"
-                          >
-                            {loadingManagerPkgId === val.pkgid &&
-                            loadingRound === index
-                              ? "Processing..."
-                              : "Claim"}
-                          </button>
-                        ) : (
-                          `Wait ${
-                            30 -
-                            Math.floor(
-                              (Date.now() - parseInt(val.timestamp) * 1000) /
-                                (1000 * 60 * 60 * 24)
-                            )
-                          } days`
-                        )
-                      ) : (
-                        "Claimed"
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                             managerInvestment.map((val, index) => (
+                               <tr key={index}>
+                                 <td> ${ethers.formatEther(val.usdt)}</td>
+                                 <td>
+                                   {new Date(
+                                     parseInt(val.timestamp) * 1000
+                                   ).toLocaleString()}
+                                 </td>
+                                 <td> ${ethers.formatEther(val.income)}</td>
+                                 <td>
+                                   {new Date(
+                                     new Date(parseInt(val.timestamp) * 1000).setMonth(
+                                       new Date(parseInt(val.timestamp) * 1000).getMonth() +
+                                         1
+                                     )
+                                   ).toLocaleString()}
+                                 </td>
+                                 <td>
+                                   {val.status ? (
+                                     Math.floor(
+                                       (Date.now() - parseInt(val.timestamp) * 1000) /
+                                         (1000 * 60 * 60 * 24)
+                                     ) >= 30 ? (
+                                       <button
+                                         type="button"
+                                         disabled={
+                                           loadingManagerPkgId === val.pkgid &&
+                                           loadingRound === index
+                                         }
+                                         onClick={() =>
+                                           fn_ClaimManagerInvestment(val.pkgid, index)
+                                         }
+                                         className="btn btn-sm btn-primary"
+                                       >
+                                         {loadingManagerPkgId === val.pkgid &&
+                                         loadingRound === index
+                                           ? "Processing..."
+                                           : "Claim"}
+                                       </button>
+                                     ) : (
+                                       `Wait ${
+                                         30 -
+                                         Math.floor(
+                                           (Date.now() - parseInt(val.timestamp) * 1000) /
+                                             (1000 * 60 * 60 * 24)
+                                         )
+                                       } days`
+                                     )
+                                   ) : (
+                                     "Claimed"
+                                   )}
+                                 </td>
+                               </tr>
+                             ))}
             </tbody>
           </table>
         </div>
