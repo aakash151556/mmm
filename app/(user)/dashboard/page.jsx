@@ -1048,8 +1048,8 @@ const Dashboard = () => {
                     <td> BVT {ethers.formatEther(val.income)}</td>
                     <td>
                       {new Date(
-                        new Date(parseInt(val.timestamp) * 1000).setMonth(
-                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
+                         new Date(parseInt(val.timestamp) * 1000).setFullYear(
+                          new Date(parseInt(val.timestamp) * 1000).getFullYear() +
                             1
                         )
                       ).toLocaleString()}
@@ -1094,8 +1094,8 @@ const Dashboard = () => {
                     <td> BVT {ethers.formatEther(val.income)}</td>
                     <td>
                       {new Date(
-                        new Date(parseInt(val.timestamp) * 1000).setMonth(
-                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
+                            new Date(parseInt(val.timestamp) * 1000).setFullYear(
+                          new Date(parseInt(val.timestamp) * 1000).getFullYear() +
                             1
                         )
                       ).toLocaleString()}
