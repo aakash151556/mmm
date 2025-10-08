@@ -259,22 +259,28 @@ export default function RootLayout({ children }) {
               <Link className="nav-link active" href="/admin/dashboard">
                 Dashboard
               </Link>
+              <Link className="nav-link active" href="/admin/user_list">
+                Super Manager List
+              </Link>
+              <Link className="nav-link active" href="/admin/daimond_list">
+                Diamond List
+              </Link>
               <Link className="nav-link" href="/admin/register">
                 Register
               </Link>
-               <Link className="nav-link" href="/admin/change_rate">
+              <Link className="nav-link" href="/admin/change_rate">
                 Change Current Rate
               </Link>
-                 <Link className="nav-link" href="/admin/block_user">
+              <Link className="nav-link" href="/admin/block_user">
                 Block User
               </Link>
-                    <Link className="nav-link" href="/admin/unblock_user">
+              <Link className="nav-link" href="/admin/unblock_user">
                 Unblock User
               </Link>
               <Link className="nav-link" href="/admin/claim_allowance">
                 Set Claim Allowance
               </Link>
-               <Link className="nav-link" href="/admin/accesscontrol">
+              <Link className="nav-link" href="/admin/accesscontrol">
                 Whitelist Contract Address
               </Link>
             </nav>

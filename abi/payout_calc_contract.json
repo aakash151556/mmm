@@ -3,6 +3,32 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "royaltyStorageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "teamContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "_account",
 				"type": "address"
 			},
@@ -168,31 +194,5 @@
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "storageContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "royaltyStorageContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "teamContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "historyContract",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
 	}
 ]

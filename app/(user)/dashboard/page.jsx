@@ -14,6 +14,7 @@ const Dashboard = () => {
     selectedAccount,
     logicContract,
     storageContract,
+    historyContract,
     royaltyStorageContract,
     teamBussinessContract,
     stakeTokenContract,
@@ -212,9 +213,9 @@ const Dashboard = () => {
         teamCount,
         sponsorCount,
         manager10Count,
-        mgrTeam,
-        smgrTeam,
-        dgrTeam,
+        // mgrTeam,
+        // smgrTeam,
+        // dgrTeam,
         mgrDirect,
         smgrDirect,
         dgrDirect,
@@ -234,9 +235,9 @@ const Dashboard = () => {
         storageContract.GetTeamCount(selectedAccount),
         storageContract.GetSponsorsCount(selectedAccount),
         storageContract.GetManagerDirectCount(selectedAccount),
-        storageContract.GetRankWiseTeamCount(selectedAccount, 1),
-        storageContract.GetRankWiseTeamCount(selectedAccount, 2),
-        storageContract.GetRankWiseTeamCount(selectedAccount, 3),
+        //         historyContract.GetLBV(selectedAccount, 0,1),
+        // historyContract.GetLBV(selectedAccount, 0,2),
+        // historyContract.GetLBV(selectedAccount, 0,3),
         storageContract.GetRankSponsorsCount(selectedAccount, 1),
         storageContract.GetRankSponsorsCount(selectedAccount, 2),
         storageContract.GetRankSponsorsCount(selectedAccount, 3),
@@ -255,9 +256,9 @@ const Dashboard = () => {
       setTeam(teamCount);
       setDirect(sponsorCount);
       setManager10Direct(manager10Count);
-      setManagerTeam(mgrTeam);
-      setSuperManagerTeam(smgrTeam);
-      setDiamondTeam(dgrTeam);
+    //  setManagerTeam(mgrTeam.length);
+    //   setSuperManagerTeam(smgrTeam.length);
+    //   setDiamondTeam(dgrTeam.length);
       setManagerDirect(mgrDirect);
       setSuperManagerDirect(smgrDirect);
       setDiamondDirect(dgrDirect);
@@ -463,9 +464,30 @@ const Dashboard = () => {
       // setBussiness(obj);
       await fetchDashboardData();
       await fetchInvestmentData(selectedAccount);
+
     };
     bind();
   }, [selectedAccount, storageContract, royaltyStorageContract]);
+
+
+  useEffect(()=>{
+    if(!historyContract) return;
+    const bindTotal=async()=>{
+    const normal=await logicContract.GetTotalRankTeam(selectedAccount,0)
+    const manager=await logicContract.GetTotalRankTeam(selectedAccount,1)
+    const supermanager=await logicContract.GetTotalRankTeam(selectedAccount,2)
+    const diamond=await logicContract.GetTotalRankTeam(selectedAccount,3)
+      setManagerTeam(manager);
+      setSuperManagerTeam(supermanager);
+      setDiamondTeam(diamond);
+   // const diamond=await historyContract.GetLBV(selectedAccount,0,3)
+
+      
+      
+    //  setDiamondTeam(diamond.length);
+    }
+    bindTotal()
+  },[historyContract])
 
   useEffect(() => {
     // if (user._rt == 0) setRankName("Member");
@@ -793,7 +815,7 @@ const Dashboard = () => {
                       <div className="d-flex more_flex">
                         <div>
                           <h2>{superManagerDirect}</h2>
-                          <p>Super Manager In Direct</p>
+                          <p>S. Manager In Direct</p>
                         </div>
                         <div className="icons">
                           <FontAwesomeIcon icon={faUserTie} />
@@ -809,7 +831,7 @@ const Dashboard = () => {
                       <div className="d-flex more_flex">
                         <div>
                           <h2>{superManagerTeam}</h2>
-                          <p>Super Manager In Team</p>
+                          <p>S. Manager In Team</p>
                         </div>
                         <div className="icons">
                           <FontAwesomeIcon icon={faUsers} />
@@ -1047,12 +1069,21 @@ const Dashboard = () => {
                     </td>
                     <td> BVT {ethers.formatEther(val.income)}</td>
                     <td>
-                      {new Date(
+                      {
+                      val.round==1?
+                      new Date(
                          new Date(parseInt(val.timestamp) * 1000).setFullYear(
                           new Date(parseInt(val.timestamp) * 1000).getFullYear() +
                             1
                         )
-                      ).toLocaleString()}
+                      ).toLocaleString():
+                       new Date(
+                         new Date(parseInt(val.timestamp) * 1000).setMonth(
+                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
+                            1
+                        )
+                      ).toLocaleString()
+                      }
                     </td>
                     <td>
                       <button type="button" className="btn btn-sm btn-primary">

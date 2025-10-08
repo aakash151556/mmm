@@ -239,6 +239,9 @@ if (selectedAccount === state.selectedAccount && chainId === state.chainId) retu
               <Link className="nav-link" href="/retopup">
                 Upgrade Package
               </Link>
+                <Link className="nav-link" href="/sm_re_topup">
+                Super Manager Re-Topup
+              </Link>
               <Link className="nav-link" href="/transaction">
                 My Wallet
               </Link>

@@ -14,6 +14,7 @@ const Dashboard = () => {
     logicContract,
     payoutContract,
     storageContract,
+    historyContract,
     royaltyStorageContract,
     teamBussinessContract,
     stakeTokenContract,
@@ -236,9 +237,9 @@ const Dashboard = () => {
         storageContract.GetTeamCount(selected),
         storageContract.GetSponsorsCount(selected),
         storageContract.GetManagerDirectCount(selected),
-        storageContract.GetRankWiseTeamCount(selected, 1),
-        storageContract.GetRankWiseTeamCount(selected, 2),
-        storageContract.GetRankWiseTeamCount(selected, 3),
+        logicContract.GetTotalRankTeam(selected, 1),
+        logicContract.GetTotalRankTeam(selected, 2),
+        logicContract.GetTotalRankTeam(selected, 3),
         storageContract.GetRankSponsorsCount(selected, 1),
         storageContract.GetRankSponsorsCount(selected, 2),
         storageContract.GetRankSponsorsCount(selected, 3),
@@ -863,12 +864,21 @@ const Dashboard = () => {
                     </td>
                     <td> BVT {ethers.formatEther(val.income)}</td>
                     <td>
-                      {new Date(
-                            new Date(parseInt(val.timestamp) * 1000).setFullYear(
+                       {
+                      val.round==1?
+                      new Date(
+                         new Date(parseInt(val.timestamp) * 1000).setFullYear(
                           new Date(parseInt(val.timestamp) * 1000).getFullYear() +
                             1
                         )
-                      ).toLocaleString()}
+                      ).toLocaleString():
+                       new Date(
+                         new Date(parseInt(val.timestamp) * 1000).setMonth(
+                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
+                            1
+                        )
+                      ).toLocaleString()
+                      }
                     </td>
                     <td>
                       <button type="button" className="btn btn-sm btn-primary">

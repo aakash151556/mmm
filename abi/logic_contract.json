@@ -2,32 +2,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "storageContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "historyContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "teamContract",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "payoutContract",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "enum CustomDataTypesContract.RankType",
 				"name": "_rt",
 				"type": "uint8"
@@ -184,12 +158,12 @@
 	{
 		"inputs": [
 			{
-				"internalType": "enum CustomDataTypesContract.PackageType",
-				"name": "pt",
-				"type": "uint8"
+				"internalType": "uint256",
+				"name": "token",
+				"type": "uint256"
 			}
 		],
-		"name": "ReTopup",
+		"name": "NormalPackageTopup",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -213,6 +187,19 @@
 			}
 		],
 		"name": "RegisterByAdmin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "enum CustomDataTypesContract.PackageType",
+				"name": "pt",
+				"type": "uint8"
+			}
+		],
+		"name": "ReTopup",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -268,6 +255,32 @@
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "storageContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "historyContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "teamContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "payoutContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	},
 	{
 		"inputs": [
@@ -346,6 +359,30 @@
 			}
 		],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "enum CustomDataTypesContract.RankType",
+				"name": "rt",
+				"type": "uint8"
+			}
+		],
+		"name": "GetTotalRankTeam",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	}
 ]
