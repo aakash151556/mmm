@@ -259,6 +259,9 @@ export default function RootLayout({ children }) {
               <Link className="nav-link active" href="/admin/dashboard">
                 Dashboard
               </Link>
+                 <Link className="nav-link active" href="/admin/topup_list">
+                Topup List
+              </Link>
               <Link className="nav-link active" href="/admin/user_list">
                 Super Manager List
               </Link>
