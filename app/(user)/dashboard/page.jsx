@@ -140,33 +140,15 @@ const Dashboard = () => {
 
         for (let k = 0; k <= topUpCount; k++) {
           for (let r = 1; r <= 4; r++) {
-            const detail = await storageContract?.GetTopupDetail(
-              selectedAccount,
-              i,
-              k,
-              r
-            );
+            if (r != 3) {
+              const detail = await storageContract?.GetTopupDetail(
+                selectedAccount,
+                i,
+                k,
+                r
+              );
 
-            const {
-              pkgid,
-              usdt,
-              price,
-              token,
-              total,
-              upgrade,
-              income,
-              round,
-              status,
-              timestamp,
-            } = detail;
-
-            const usdtVal = Number(ethers.formatEther(usdt));
-            const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
-
-            if (shouldPush) {
-              obj[rankKey].self += usdtVal;
-
-              allInvestments[i].push({
+              const {
                 pkgid,
                 usdt,
                 price,
@@ -177,7 +159,27 @@ const Dashboard = () => {
                 round,
                 status,
                 timestamp,
-              });
+              } = detail;
+
+              const usdtVal = Number(ethers.formatEther(usdt));
+              const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
+
+              if (shouldPush) {
+                obj[rankKey].self += usdtVal;
+
+                allInvestments[i].push({
+                  pkgid,
+                  usdt,
+                  price,
+                  token,
+                  total,
+                  upgrade,
+                  income,
+                  round,
+                  status,
+                  timestamp,
+                });
+              }
             }
           }
         }
@@ -256,9 +258,9 @@ const Dashboard = () => {
       setTeam(teamCount);
       setDirect(sponsorCount);
       setManager10Direct(manager10Count);
-    //  setManagerTeam(mgrTeam.length);
-    //   setSuperManagerTeam(smgrTeam.length);
-    //   setDiamondTeam(dgrTeam.length);
+      //  setManagerTeam(mgrTeam.length);
+      //   setSuperManagerTeam(smgrTeam.length);
+      //   setDiamondTeam(dgrTeam.length);
       setManagerDirect(mgrDirect);
       setSuperManagerDirect(smgrDirect);
       setDiamondDirect(dgrDirect);
@@ -464,30 +466,29 @@ const Dashboard = () => {
       // setBussiness(obj);
       await fetchDashboardData();
       await fetchInvestmentData(selectedAccount);
-
     };
     bind();
   }, [selectedAccount, storageContract, royaltyStorageContract]);
 
-
-  useEffect(()=>{
-    if(!historyContract) return;
-    const bindTotal=async()=>{
-    const normal=await logicContract.GetTotalRankTeam(selectedAccount,0)
-    const manager=await logicContract.GetTotalRankTeam(selectedAccount,1)
-    const supermanager=await logicContract.GetTotalRankTeam(selectedAccount,2)
-    const diamond=await logicContract.GetTotalRankTeam(selectedAccount,3)
+  useEffect(() => {
+    if (!historyContract) return;
+    const bindTotal = async () => {
+      const normal = await logicContract.GetTotalRankTeam(selectedAccount, 0);
+      const manager = await logicContract.GetTotalRankTeam(selectedAccount, 1);
+      const supermanager = await logicContract.GetTotalRankTeam(
+        selectedAccount,
+        2
+      );
+      const diamond = await logicContract.GetTotalRankTeam(selectedAccount, 3);
       setManagerTeam(manager);
       setSuperManagerTeam(supermanager);
       setDiamondTeam(diamond);
-   // const diamond=await historyContract.GetLBV(selectedAccount,0,3)
+      // const diamond=await historyContract.GetLBV(selectedAccount,0,3)
 
-      
-      
-    //  setDiamondTeam(diamond.length);
-    }
-    bindTotal()
-  },[historyContract])
+      //  setDiamondTeam(diamond.length);
+    };
+    bindTotal();
+  }, [historyContract]);
 
   useEffect(() => {
     // if (user._rt == 0) setRankName("Member");
@@ -1069,21 +1070,23 @@ const Dashboard = () => {
                     </td>
                     <td> BVT {ethers.formatEther(val.income)}</td>
                     <td>
-                      {
-                      val.round==1?
-                      new Date(
-                         new Date(parseInt(val.timestamp) * 1000).setFullYear(
-                          new Date(parseInt(val.timestamp) * 1000).getFullYear() +
-                            1
-                        )
-                      ).toLocaleString():
-                       new Date(
-                         new Date(parseInt(val.timestamp) * 1000).setMonth(
-                          new Date(parseInt(val.timestamp) * 1000).getMonth() +
-                            1
-                        )
-                      ).toLocaleString()
-                      }
+                      {val.round == 1
+                        ? new Date(
+                            new Date(
+                              parseInt(val.timestamp) * 1000
+                            ).setFullYear(
+                              new Date(
+                                parseInt(val.timestamp) * 1000
+                              ).getFullYear() + 1
+                            )
+                          ).toLocaleString()
+                        : new Date(
+                            new Date(parseInt(val.timestamp) * 1000).setMonth(
+                              new Date(
+                                parseInt(val.timestamp) * 1000
+                              ).getMonth() + 1
+                            )
+                          ).toLocaleString()}
                     </td>
                     <td>
                       <button type="button" className="btn btn-sm btn-primary">
@@ -1125,9 +1128,10 @@ const Dashboard = () => {
                     <td> BVT {ethers.formatEther(val.income)}</td>
                     <td>
                       {new Date(
-                            new Date(parseInt(val.timestamp) * 1000).setFullYear(
-                          new Date(parseInt(val.timestamp) * 1000).getFullYear() +
-                            1
+                        new Date(parseInt(val.timestamp) * 1000).setFullYear(
+                          new Date(
+                            parseInt(val.timestamp) * 1000
+                          ).getFullYear() + 1
                         )
                       ).toLocaleString()}
                     </td>
