@@ -26,7 +26,7 @@ const ReTopup = () => {
         setLoading(true);
         const resp = await fetch("/api/bvt-price");
         let { price } = await resp.json();
-        const currentPrice = await storageContract.GetCurrentPrice();
+        const currentPrice = await logicContract.GetPrice();
         const currentPriceInETH = ethers.formatEther(currentPrice);
         if (!price) price = currentPriceInETH;
         if (Number(currentPriceInETH) !== Number(currentPriceInETH)) {
@@ -66,7 +66,7 @@ const ReTopup = () => {
       } catch (err) {
         setLoading(false);
         console.error(err);
-        const currentPrice = await storageContract.GetCurrentPrice();
+        const currentPrice = await logicContract.GetPrice();
         const currentPriceInETH = ethers.formatEther(currentPrice);
         setCurrentPrice(currentPriceInETH);
       }

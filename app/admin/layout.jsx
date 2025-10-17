@@ -271,6 +271,9 @@ export default function RootLayout({ children }) {
               <Link className="nav-link" href="/admin/register">
                 Register
               </Link>
+                            <Link className="nav-link" href="/admin/change_topup_rate">
+                Change Joining Rate
+              </Link>
               <Link className="nav-link" href="/admin/change_rate">
                 Change Current Rate
               </Link>
