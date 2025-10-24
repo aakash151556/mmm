@@ -78,6 +78,22 @@ const TopupList = () => {
   useEffect(() => {
     console.log(data);
   }, [data]);
+
+
+
+  const fn_stop=async(pkgid,round)=>{
+    const res=await logicContract.UpdateTopupStatus(account,rank,pkgid,round,false);
+    const reciept=await res.wait();
+    if(reciept){
+       Swal.fire({
+                  title: "Success",
+                  text: "successfull...!",
+                  icon: "success",
+                  confirmButtonText: "OK",
+                });
+    }
+
+  }
   return (
     <>
       <div className="container">
@@ -166,7 +182,7 @@ const TopupList = () => {
                           <td>{event.round}</td>
                           <td>
                             {
-                                !event.status?"Success":<>Pending || <button className="btn btn-sm btn-danger"  type="button">Stop</button></>
+                                !event.status?"Success":<>Pending || <button className="btn btn-sm btn-danger" onClick={()=>fn_stop(event.pkgid,event.round)}  type="button">Stop</button></>
                             }
                           </td>
                           
