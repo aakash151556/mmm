@@ -140,7 +140,7 @@ const Dashboard = () => {
 
         for (let k = 0; k <= topUpCount; k++) {
           for (let r = 1; r <= 4; r++) {
-            if (r != 3) {
+            if (r == 1) {
               const detail = await storageContract?.GetTopupDetail(
                 selectedAccount,
                 i,
