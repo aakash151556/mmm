@@ -200,8 +200,8 @@ const Register = ({ params }) => {
                   <option value="">Select Package</option>
                   {/* <option value="0">54 USDT (BVT) NORMAL</option> */}
                   <option value="1">215 USDT (BVT) MANAGER</option>
-                  <option value="2">5000 BVT SUPER MANAGER</option>
-                  <option value="3">25000 BVT DIAMOND</option>
+                  {/* <option value="2">5000 BVT SUPER MANAGER</option>
+                  <option value="3">25000 BVT DIAMOND</option> */}
                 </select>
               </div>
               <div className="form-group">
