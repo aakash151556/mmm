@@ -310,7 +310,7 @@ const Dashboard = () => {
     setLoadingManagerPkgId(pkgid);
     setLoadingRound(round);
     try {
-      const res = await logicContract.ClaimStakePayoutByOwner(selected,1, pkgid, round + 1);
+      const res = await logicContract.ClaimStakePayoutByOwner(selected,1, pkgid, round);
       if (res) {
         Swal.fire({
           title: "Success!",
