@@ -161,6 +161,7 @@ const Dashboard = () => {
               status,
               timestamp,
             } = detail;
+        
 
             const usdtVal = Number(ethers.formatEther(usdt));
             const shouldPush = i === 0 || i === 1 ? usdt > 0 : token > 0;
@@ -309,6 +310,7 @@ const Dashboard = () => {
   const fn_ClaimManagerInvestment = async (pkgid, round) => {
     setLoadingManagerPkgId(pkgid);
     setLoadingRound(round);
+ 
     try {
       const res = await logicContract.ClaimStakePayoutByOwner(selected,1, pkgid, round);
       if (res) {
@@ -805,15 +807,15 @@ const Dashboard = () => {
                                          type="button"
                                          disabled={
                                            loadingManagerPkgId === val.pkgid &&
-                                           loadingRound === index
+                                           loadingRound === val.round
                                          }
                                          onClick={() =>
-                                           fn_ClaimManagerInvestment(val.pkgid, index)
+                                           fn_ClaimManagerInvestment(val.pkgid, val.round)
                                          }
                                          className="btn btn-sm btn-primary"
                                        >
                                          {loadingManagerPkgId === val.pkgid &&
-                                         loadingRound === index
+                                         loadingRound === val.round
                                            ? "Processing..."
                                            : "Claim"}
                                        </button>

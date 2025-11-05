@@ -1012,15 +1012,15 @@ const Dashboard = () => {
                             type="button"
                             disabled={
                               loadingManagerPkgId === val.pkgid &&
-                              loadingRound === index
+                              loadingRound === val.round
                             }
                             onClick={() =>
-                              fn_ClaimManagerInvestment(val.pkgid, index)
+                              fn_ClaimManagerInvestment(val.pkgid, val.round)
                             }
                             className="btn btn-sm btn-primary"
                           >
                             {loadingManagerPkgId === val.pkgid &&
-                            loadingRound === index
+                            loadingRound === val.round
                               ? "Processing..."
                               : "Claim"}
                           </button>
