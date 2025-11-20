@@ -35,7 +35,7 @@ function decrypt(encrypted_text, key) {
 }
 
 export default function handler(req, res) {
-  const token = '88b03e8ec3df1bac3304a009e1818476';
+  const token = 'bd6fdc23c5a1d31a9d8a9d934eeeac08';
   const key = getKey(token);
 
   if (req.method === 'POST') {
